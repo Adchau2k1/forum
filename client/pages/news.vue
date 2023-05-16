@@ -1,3 +1,7 @@
+<script setup></script>
+
 <template>
-    <NuxtLayout>News</NuxtLayout>
+    <NuxtLayout>
+        <div>Trang tin tức</div>
+    </NuxtLayout>
 </template>

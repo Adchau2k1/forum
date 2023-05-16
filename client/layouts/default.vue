@@ -2,10 +2,22 @@
 import { ref } from 'vue'
 
 const search = ref('')
+
+definePageMeta({
+    // you can also pass a string or a computed property
+    key: (route) => route.slug,
+    transition: {
+        name: 'news',
+    },
+    keepalive: {
+        exclude: ['modal'],
+    },
+})
 </script>
 
 <template>
-    <div>
+    <main>
+        <!-- Header -->
         <div
             class="z-10 fixed inset-0 grid grid-cols-3 justify-center items-center h-[66px] px-5 bg-white shadow-none border-b border-b-solid border-b-[#e8ebed]"
         >
@@ -22,17 +34,18 @@ const search = ref('')
                 <v-icon class="!absolute top-1/2 -translate-y-1/2 right-4">mdi-magnify</v-icon>
             </div>
             <div class="text-right">
-                <button
-                    class="px-4 py-2 rounded-xl text-15px font-600 !text-white !bg-primary outline-none border-none"
-                    text
+                <NuxtLink
+                    to="/login"
+                    class="px-4 py-2 rounded-xl text-15px font-600 text-white !bg-primary no-underline"
                 >
                     Đăng nhập
-                </button>
+                </NuxtLink>
             </div>
         </div>
 
         <div>
-            <div class="z-10 fixed left-5 top-82px h-[calc(100vh-100px)] py-4 rounded-md shadow-lg">
+            <!-- Nav -->
+            <div class="z-10 fixed left-5 top-82px h-[calc(100vh-100px)] py-4 rounded-md shadow-pretty">
                 <div class="flex flex-col items-center gap-4">
                     <button class="w-12 h-12 rounded-full bg-#22e1b9">
                         <v-icon class="!text-white">mdi-plus</v-icon>
@@ -68,13 +81,12 @@ const search = ref('')
                 </div>
             </div>
 
-            <nuxt-child>
-                <div class="mt-82px ml-105px mr-4 px-4">
-                    <slot></slot>
-                </div>
-            </nuxt-child>
+            <!-- Content -->
+            <div class="mt-82px ml-42px mr-4 px-4">
+                <slot />
+            </div>
         </div>
-    </div>
+    </main>
 </template>
 
 <style scoped>

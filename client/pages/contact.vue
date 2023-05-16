@@ -1,5 +1,5 @@
+<script setup></script>
+
 <template>
-    <div>
-        Contact
-    </div>
+    <NuxtLayout> <div>Trang liên hệ</div> </NuxtLayout>
 </template>

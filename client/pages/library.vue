@@ -1,3 +1,5 @@
+<script setup></script>
+
 <template>
-    <NuxtLayout>Trang thư viện</NuxtLayout>
+    <NuxtLayout> <div>Trang thư viện</div> </NuxtLayout>
 </template>

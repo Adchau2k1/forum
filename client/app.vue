@@ -1,9 +1,7 @@
-<script setup>
-import HomePage from '~/components/HomePage.vue'
-</script>
+<script setup></script>
 
 <template>
-  <NuxtLayout>
-    <HomePage />
-  </NuxtLayout>
+    <NuxtLayout>
+        <NuxtPage />
+    </NuxtLayout>
 </template>
