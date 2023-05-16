@@ -1,0 +1,22 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/image-edge": "^1.0.0-28059208.2abef1b",
+    "@types/node": "^18",
+    "@unocss/nuxt": "^0.51.8",
+    "nuxt": "^3.4.3"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.2.96",
+    "sass": "^1.62.1",
+    "vuetify": "^3.2.4"
+  }
+}
