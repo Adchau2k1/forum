@@ -1,4 +1,6 @@
 <script setup>
+import { ref, definePageMeta } from 'vue'
+
 const form = ref(null)
 const username = ref('')
 const email = ref('')

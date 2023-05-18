@@ -1,15 +1,14 @@
 <script setup>
+import { ref, definePageMeta } from 'vue'
+import { useRouter } from 'vue-router'
+import Message from '~/components/Message.vue'
+
+const router = useRouter()
 const form = ref(null)
 const username = ref('')
 const password = ref('')
 const loading = ref(false)
-
-const snackConfig = ref({
-    open: false,
-    icon: '',
-    text: '',
-    color: '',
-})
+const showMessage = ref(false)
 
 const rules = [(value) => !!value || 'Trường dữ liệu bắt buộc!']
 
@@ -17,15 +16,9 @@ const onSubmit = () => {
     if (!form.value) return
 
     loading.value = true
-
-    setTimeout(() => {
-        snackConfig.value = {
-            open: true,
-            icon: 'mdi-check-circle-outline',
-            text: 'Đăng nhập thành công',
-            color: 'success',
-        }
-    }, 2000)
+    showMessage.value = true
+    console.log(router)
+    setTimeout(() => router.push('/'), 3000)
 }
 
 definePageMeta({
@@ -35,19 +28,7 @@ definePageMeta({
 
 <template>
     <div class="flex justify-center items-center h-screen bg-gradient-to-r from-purple-500 to-pink-300 text-white p-4">
-        <v-snackbar v-model="snackConfig.open" location="top center" :timeout="3000" :color="snackConfig.color">
-            <div class="flex justify-between items-center">
-                <div>
-                    <span
-                        ><v-icon>{{ snackConfig.icon }}</v-icon></span
-                    >
-                    <span class="ml-2">{{ snackConfig.text }}</span>
-                </div>
-                <button type="button" color="white" text @click="snackConfig.open = false">
-                    <v-icon>mdi-close</v-icon>
-                </button>
-            </div>
-        </v-snackbar>
+        <Message v-model="showMessage" message="Đăng nhập thành công" @onClickClose="showMessage = false" />
 
         <div class="flex items-center justify-center w-70% h-70% p-8 rounded-md shadow-xl bg-white">
             <div class="w-1/2 mr-10">
