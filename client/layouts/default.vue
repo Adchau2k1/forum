@@ -43,9 +43,9 @@ definePageMeta({
             </div>
         </div>
 
-        <div>
+        <div class="mb-5">
             <!-- Nav -->
-            <div class="z-10 fixed left-5 top-82px h-[calc(100vh-100px)] py-4 rounded-md shadow-pretty">
+            <div class="z-10 fixed left-5 top-82px h-[calc(100vh-100px)] py-4 rounded-md shadow-pretty bg-white">
                 <div class="flex flex-col items-center gap-4">
                     <button class="w-12 h-12 rounded-full bg-#22e1b9">
                         <v-icon class="!text-white">mdi-plus</v-icon>
@@ -58,11 +58,11 @@ definePageMeta({
                         <span class="text-11px font-medium">Trang chủ</span>
                     </NuxtLink>
                     <NuxtLink
-                        to="/news"
+                        to="/topic"
                         class="flex flex-col justify-center items-center rounded-md w-full p-3 hover:bg-gray-100 no-underline !text-black"
                     >
                         <v-icon size="30">mdi-newspaper</v-icon>
-                        <span class="text-11px font-medium">Tin tức</span>
+                        <span class="text-11px font-medium">Chuyên mục</span>
                     </NuxtLink>
                     <NuxtLink
                         to="/library"
@@ -82,7 +82,8 @@ definePageMeta({
             </div>
 
             <!-- Content -->
-            <div class="mt-82px ml-42px mr-4 px-4">
+            <!-- <div class="w-82px mr-4"></div> -->
+            <div class="ml-60px min-h-screen mt-42px pt-11px pr-11px overflow-hidden">
                 <slot />
             </div>
         </div>
@@ -92,6 +93,5 @@ definePageMeta({
 <style scoped>
 .router-link-active {
     background-color: #ddd;
-    color: #fff;
 }
 </style>

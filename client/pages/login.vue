@@ -1,8 +1,4 @@
 <script setup>
-import { ref, definePageMeta } from 'vue'
-import { useRouter } from 'vue-router'
-import Message from '~/components/Message.vue'
-
 const router = useRouter()
 const form = ref(null)
 const username = ref('')

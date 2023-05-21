@@ -2,6 +2,8 @@
 
 <template>
     <NuxtLayout>
-        <div>Trang tin tức</div>
+        <div>
+            <h2 class="uppercase">Chuyên mục</h2>
+        </div>
     </NuxtLayout>
 </template>
