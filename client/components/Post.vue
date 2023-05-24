@@ -27,7 +27,7 @@ const timeRead = '2 phút đọc'
             <h3 class="truncate">
                 {{ props.title }}
             </h3>
-            <p class="mt-2">
+            <p class="mt-2 line-clamp-2">
                 {{ props.desc }}
             </p>
         </div>

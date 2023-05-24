@@ -22,7 +22,7 @@ definePageMeta({
             class="z-10 fixed inset-0 grid grid-cols-3 justify-center items-center h-[66px] px-5 bg-white shadow-none border-b border-b-solid border-b-[#e8ebed]"
         >
             <div class="flex items-center">
-                <NuxtImg src="/img/logo-forum.png" alt="My Image" height="50" width="50" sizes="md:40 lg:100" />
+                <NuxtImg src="/img/logo-forum.png" alt="My Image" height="50" width="50" />
                 <span class="ml-2 text-lg font-medium">Diễn đàn sinh viên</span>
             </div>
             <div class="relative h-10 bg-gray-100 flex items-center justify-center border rounded-xl">
@@ -72,18 +72,18 @@ definePageMeta({
                         <span class="text-11px font-medium">Thư viện</span>
                     </NuxtLink>
                     <NuxtLink
-                        to="/contact"
+                        to="/introduce"
                         class="flex flex-col justify-center items-center rounded-md w-full p-3 hover:bg-gray-100 no-underline !text-black"
                     >
-                        <v-icon size="30">mdi-contacts</v-icon>
-                        <span class="text-11px font-medium mt-1">Liên hệ</span>
+                        <v-icon size="30">mdi-information </v-icon>
+                        <span class="text-11px font-medium mt-1">Giới thiệu</span>
                     </NuxtLink>
                 </div>
             </div>
 
             <!-- Content -->
             <!-- <div class="w-82px mr-4"></div> -->
-            <div class="ml-60px min-h-screen mt-42px pt-11px pr-11px overflow-hidden">
+            <div class="ml-65px min-h-screen mt-42px pt-11px pr-11px overflow-hidden">
                 <slot />
             </div>
         </div>
