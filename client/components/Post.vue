@@ -15,7 +15,7 @@ const timeRead = '2 phút đọc'
 </script>
 
 <template>
-    <div class="border border-gray-500 rounded-lg p-4">
+    <div class="border-2 border-solid border-#e8e8e8 rounded-lg p-4">
         <div class="w-full flex items-center justify-between">
             <div class="flex items-center">
                 <NuxtImg :src="props.imgUrl || '/img/logo-forum.png'" width="40" height="40" />

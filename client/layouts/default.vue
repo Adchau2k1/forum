@@ -3,22 +3,22 @@ import { ref } from 'vue'
 
 const search = ref('')
 
-definePageMeta({
-    // you can also pass a string or a computed property
-    key: (route) => route.slug,
-    transition: {
-        name: 'news',
-    },
-    keepalive: {
-        exclude: ['modal'],
-    },
+useHead({
+    title: 'Diễn đàn sinh viên',
+    meta: [
+        {
+            name: 'description',
+            content:
+                'Diễn đàn Sinh viên là cộng đồng trực tuyến năng động và sôi động, dành riêng cho sinh viên trên khắp nơi.',
+        },
+    ],
 })
 </script>
 
 <template>
     <main>
         <!-- Header -->
-        <div
+        <header
             class="z-10 fixed inset-0 grid grid-cols-3 justify-center items-center h-[66px] px-5 bg-white shadow-none border-b border-b-solid border-b-[#e8ebed]"
         >
             <div class="flex items-center">
@@ -41,39 +41,39 @@ definePageMeta({
                     Đăng nhập
                 </NuxtLink>
             </div>
-        </div>
+        </header>
 
         <div class="mb-5">
             <!-- Nav -->
             <div class="z-10 fixed left-5 top-82px h-[calc(100vh-100px)] py-4 rounded-md shadow-pretty bg-white">
-                <div class="flex flex-col items-center gap-4">
+                <div class="flex flex-col items-center gap-4 p-1">
                     <button class="w-12 h-12 rounded-full bg-#22e1b9">
                         <v-icon class="!text-white">mdi-plus</v-icon>
                     </button>
                     <NuxtLink
                         to="/"
-                        class="flex flex-col justify-center items-center hover:bg-gray-100 rounded-md w-full p-3 no-underline !text-black"
+                        class="flex flex-col justify-center items-center hover:bg-gray-100 rounded-md w-full px-2 py-3 no-underline !text-black"
                     >
                         <v-icon size="30">mdi-home</v-icon>
                         <span class="text-11px font-medium">Trang chủ</span>
                     </NuxtLink>
                     <NuxtLink
                         to="/topic"
-                        class="flex flex-col justify-center items-center rounded-md w-full p-3 hover:bg-gray-100 no-underline !text-black"
+                        class="flex flex-col justify-center items-center rounded-md w-full px-2 py-3 hover:bg-gray-100 no-underline !text-black"
                     >
                         <v-icon size="30">mdi-newspaper</v-icon>
                         <span class="text-11px font-medium">Chuyên mục</span>
                     </NuxtLink>
                     <NuxtLink
-                        to="/library"
-                        class="flex flex-col justify-center items-center rounded-md w-full p-3 hover:bg-gray-100 no-underline !text-black"
+                        to="/utilities"
+                        class="flex flex-col justify-center items-center rounded-md w-full px-2 py-3 hover:bg-gray-100 no-underline !text-black"
                     >
-                        <v-icon size="30">mdi-library</v-icon>
-                        <span class="text-11px font-medium">Thư viện</span>
+                        <v-icon size="30">mdi-tools</v-icon>
+                        <span class="text-11px font-medium">Tiện ích</span>
                     </NuxtLink>
                     <NuxtLink
                         to="/introduce"
-                        class="flex flex-col justify-center items-center rounded-md w-full p-3 hover:bg-gray-100 no-underline !text-black"
+                        class="flex flex-col justify-center items-center rounded-md w-full px-2 py-3 hover:bg-gray-100 no-underline !text-black"
                     >
                         <v-icon size="30">mdi-information </v-icon>
                         <span class="text-11px font-medium mt-1">Giới thiệu</span>

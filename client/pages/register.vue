@@ -36,8 +36,8 @@ definePageMeta({
 </script>
 
 <template>
-    <div class="flex justify-center items-center h-screen bg-gradient-to-r from-purple-500 to-pink-300 text-white p-4">
-        <div class="flex items-center justify-center w-70% min-h-70% p-8 rounded-md shadow-xl bg-white">
+    <div class="flex justify-center items-center h-screen bg-gradient-to-r from-green-400 to-purple-300 text-white p-4">
+        <div class="flex items-center justify-center w-70% 2xl:w-50% min-h-70% p-8 rounded-md shadow-xl bg-white">
             <div class="w-1/2 mr-10">
                 <NuxtLink to="/"><NuxtImg src="/img/logo-forum.png" width="400" height="400" /></NuxtLink>
             </div>
@@ -96,9 +96,7 @@ definePageMeta({
                         >
                         <v-col cols="12" class="text-center"
                             >Bạn đã có tài khoản?
-                            <NuxtLink to="/login" class="font-500 !text-primary no-underline"
-                                >Đăng nhập</NuxtLink
-                            ></v-col
+                            <NuxtLink to="/login" class="font-500 text-primary no-underline">Đăng nhập</NuxtLink></v-col
                         >
                     </v-row>
                 </v-container>

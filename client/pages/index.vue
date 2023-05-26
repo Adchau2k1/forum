@@ -78,17 +78,17 @@ const forumStatistics = {
 <template>
     <NuxtLayout>
         <div class="w-full">
-            <Message v-model="showMessage" message="Đăng nhập thành công" @onClickClose="showMessage = false" />
+            <Message v-model="showMessage" type="error" message="Lỗi" @onClickClose="showMessage = false" />
 
             <div class="max-w-full flex gap-10">
                 <div class="w-7/10">
                     <div class="flex justify-between items-center">
                         <h2 class="uppercase">Bài viết</h2>
                         <button class="px-3 py-6px rounded-lg font-500 text-15px text-white bg-[rgb(255,133,98)]">
-                            <v-icon class="text-white mr-1" size="24px">mdi-pencil-box</v-icon>Đăng bài
+                            <v-icon class="text-white mr-1" size="24px">mdi-note-edit-outline</v-icon>Đăng bài
                         </button>
                     </div>
-                    <div class="mt-10">
+                    <div class="mt-8">
                         <div v-for="item of data" class="post-item">
                             <Post v-bind="item" />
                         </div>
@@ -99,7 +99,7 @@ const forumStatistics = {
                     <h4 class="uppercase">Các chủ đề được dề xuất</h4>
                     <div class="min-h-90 mt-4 p-4 rounded-md bg-gradient-to-b to-purple-300 from-green-300">
                         <h3 class="mb-4 text-blue-700">Bài viết nổi bật</h3>
-                        <div v-for="item of postTop" class="w-full post-top-item">
+                        <div v-for="item of postTop" :key="item.id" class="w-full post-top-item">
                             <NuxtLink :to="item.url" class="w-full mt-3 !no-underline font-500"
                                 ><span>{{ item.title }}</span> - <span>[{{ item.postBy }}]</span>
                             </NuxtLink>
@@ -110,17 +110,20 @@ const forumStatistics = {
                         <h3 class="text-blue-700">Thống kê diễn đàn</h3>
                         <div class="mt-4 font-300">
                             <p class="flex justify-between">
-                                <span class="opacity-95">Chủ đề:</span><span>{{ forumStatistics.topics }}</span>
+                                <span class="opacity-95">Chủ đề:</span
+                                ><span class="font-500">{{ forumStatistics.topics }}</span>
                             </p>
                             <p class="flex justify-between">
-                                <span class="opacity-95">Bài viết:</span><span>{{ forumStatistics.posts }}</span>
+                                <span class="opacity-95">Bài viết:</span
+                                ><span class="font-500">{{ forumStatistics.posts }}</span>
                             </p>
                             <p class="flex justify-between">
-                                <span class="opacity-95">Thành viên: </span><span>{{ forumStatistics.members }}</span>
+                                <span class="opacity-95">Thành viên: </span
+                                ><span class="font-500">{{ forumStatistics.members }}</span>
                             </p>
                             <p class="flex justify-between">
                                 <span class="opacity-95">Lượt truy cập trung bình:</span
-                                ><span>{{ forumStatistics.aveVisit }}</span>
+                                ><span class="font-500">{{ forumStatistics.aveVisit }}</span>
                             </p>
                         </div>
                     </div>
