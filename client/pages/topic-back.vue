@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">
@@ -113,7 +113,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">
@@ -143,7 +143,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">
@@ -173,7 +173,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">
@@ -206,7 +206,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">
@@ -236,7 +236,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">
@@ -266,7 +266,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">
@@ -299,7 +299,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">
@@ -329,7 +329,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">
@@ -359,7 +359,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center">
-                            <span class="">Số bài viết</span>
+                            <span class="min-w-100px text-center">Số bài viết</span>
                             <span class="font-600">125</span>
                         </div>
                         <div class="flex items-center">

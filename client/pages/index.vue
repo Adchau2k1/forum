@@ -78,15 +78,18 @@ const forumStatistics = {
 <template>
     <NuxtLayout>
         <div class="w-full">
-            <Message v-model="showMessage" type="error" message="Lỗi" @onClickClose="showMessage = false" />
+            <Message v-model="showMessage" type="error" message="Có lỗi xảy ra!" @onClickClose="showMessage = false" />
 
             <div class="max-w-full flex gap-10">
                 <div class="w-7/10">
                     <div class="flex justify-between items-center">
                         <h2 class="uppercase">Bài viết</h2>
-                        <button class="px-3 py-6px rounded-lg font-500 text-15px text-white bg-[rgb(255,133,98)]">
+                        <NuxtLink
+                            to="/topic/newPost"
+                            class="px-3 py-6px flex items-center rounded-lg font-500 text-15px no-underline text-white bg-[rgb(255,133,98)]"
+                        >
                             <v-icon class="text-white mr-1" size="24px">mdi-note-edit-outline</v-icon>Đăng bài
-                        </button>
+                        </NuxtLink>
                     </div>
                     <div class="mt-8">
                         <div v-for="item of data" class="post-item">

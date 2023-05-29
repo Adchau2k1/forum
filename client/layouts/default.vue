@@ -1,7 +1,5 @@
 <script setup>
-import { ref } from 'vue'
-
-const search = ref('')
+import Search from '~/components/Search.vue'
 
 useHead({
     title: 'Diễn đàn sinh viên',
@@ -25,14 +23,9 @@ useHead({
                 <NuxtImg src="/img/logo-forum.png" alt="My Image" height="50" width="50" />
                 <span class="ml-2 text-lg font-medium">Diễn đàn sinh viên</span>
             </div>
-            <div class="relative h-10 bg-gray-100 flex items-center justify-center border rounded-xl">
-                <input
-                    v-model="search"
-                    placeholder="Tìm kiếm"
-                    class="w-full pl-4 pr-12 h-full text-15px outline-none text-textColor"
-                />
-                <v-icon class="!absolute top-1/2 -translate-y-1/2 right-4">mdi-magnify</v-icon>
-            </div>
+
+            <Search />
+
             <div class="text-right">
                 <NuxtLink
                     to="/login"
