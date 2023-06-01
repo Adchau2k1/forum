@@ -3,6 +3,7 @@ const router = useRouter()
 const form = ref(null)
 const username = ref('')
 const password = ref('')
+const visible = ref(false)
 const loading = ref(false)
 const showMessage = ref(false)
 
@@ -50,10 +51,12 @@ definePageMeta({
                             <v-text-field
                                 v-model="password"
                                 :rules="rules"
-                                type="password"
+                                :type="visible ? 'text' : 'password'"
+                                :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
                                 variant="solo"
                                 label="Mật khẩu"
                                 bg-color="rgba(22,24,35,.06)"
+                                @click:append-inner="visible = !visible"
                             ></v-text-field>
                         </v-col>
                     </v-row>

@@ -24,7 +24,7 @@ const timeRead = '2 phút đọc'
             <button class="-mr-13px p-1"><v-icon>mdi-dots-vertical</v-icon></button>
         </div>
         <div class="mt-3">
-            <NuxtLink to="#" class="truncate font-semibold no-underline text-xl text-black">
+            <NuxtLink to="/topic/23" class="truncate font-semibold no-underline text-xl text-black">
                 {{ props.title }}
             </NuxtLink>
             <p class="mt-2 line-clamp-2">
