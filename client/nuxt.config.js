@@ -1,3 +1,5 @@
+import { resolve } from 'path'
+
 export default defineNuxtConfig({
     modules: ['@unocss/nuxt', '@nuxt/image-edge'],
 
@@ -21,5 +23,15 @@ export default defineNuxtConfig({
         '/test': { ssr: false },
         // All page
         '/allPage/**/': { ssr: false },
+    },
+
+    hooks: {
+        'pages:extend'(pages) {
+            pages.push({
+                name: 'profile',
+                path: '/@:username',
+                file: resolve(__dirname, 'pages/profile.vue'),
+            })
+        },
     },
 })

@@ -1,5 +1,6 @@
 <script setup>
 const props = defineProps({
+    id: Number,
     imgUrl: String,
     postBy: String,
     title: String,
@@ -19,12 +20,12 @@ const timeRead = '2 phút đọc'
         <div class="w-full flex items-center justify-between">
             <div class="flex items-center">
                 <NuxtImg :src="props.imgUrl || '/img/logo-forum.png'" width="40" height="40" />
-                <span>{{ props.postBy }}</span>
+                <span class="font-medium">{{ props.postBy }}</span>
             </div>
             <button class="-mr-13px p-1"><v-icon>mdi-dots-vertical</v-icon></button>
         </div>
         <div class="mt-3">
-            <NuxtLink to="/topic/23" class="truncate font-semibold no-underline text-xl text-black">
+            <NuxtLink :to="`/topic/${props.id}`" class="truncate font-medium no-underline text-xl text-black">
                 {{ props.title }}
             </NuxtLink>
             <p class="mt-2 line-clamp-2">

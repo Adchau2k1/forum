@@ -46,7 +46,6 @@ const onSubmit = () => {
                                         :rules="titleRules"
                                         placeholder="Nhập tiêu đề bài viết"
                                         variant="solo"
-                                        bg-color="rgba(22,24,35,.06)"
                                         class="!rounded-xl mt-2"
                                     ></v-text-field>
                                 </v-col>
@@ -58,16 +57,16 @@ const onSubmit = () => {
                                         v-model="content"
                                         :rules="contentRules"
                                         variant="solo-inverted"
-                                        class="!bg-white mt-2"
+                                        class="mt-2"
                                     ></v-textarea>
                                 </v-col>
                             </v-row>
 
                             <v-row
-                                ><v-col cols="12" class="text-center"
+                                ><v-col cols="12"
                                     ><v-btn
                                         type="submit"
-                                        class="px-5 py-3 !h-40px !font-500 rounded-lg text-white !bg-primary"
+                                        class="px-5 py-3 !h-40px !font-500 rounded-lg !text-xs text-white !bg-primary"
                                         >Đăng bài</v-btn
                                     ></v-col
                                 >
@@ -80,4 +79,8 @@ const onSubmit = () => {
     </NuxtLayout>
 </template>
 
-<style scoped></style>
+<style scoped>
+textarea {
+    background-color: #fff !important;
+}
+</style>

@@ -18,6 +18,9 @@ const onSubmit = () => {
     setTimeout(() => router.push('/'), 3000)
 }
 
+useHead({
+    title: 'Đăng nhập tài khoản',
+})
 definePageMeta({
     layout: false,
 })
