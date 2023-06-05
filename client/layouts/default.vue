@@ -1,6 +1,14 @@
 <script setup>
 import Search from '~/components/Search.vue'
 
+const router = useRouter()
+const route = useRoute()
+const username = 'Admin'
+
+const handleLogout = () => {
+    router.push('/login')
+}
+
 useHead({
     title: 'Diễn đàn sinh viên',
     meta: [
@@ -27,12 +35,44 @@ useHead({
             <Search />
 
             <div class="text-right">
-                <NuxtLink
-                    to="/login"
-                    class="px-4 py-2 rounded-xl text-15px font-600 text-white !bg-primary no-underline"
-                >
-                    Đăng nhập
-                </NuxtLink>
+                <div v-if="false">
+                    <NuxtLink
+                        to="/login"
+                        class="non-active px-4 py-2 rounded-xl text-15px font-600 text-white !bg-primary no-underline"
+                    >
+                        Đăng nhập
+                    </NuxtLink>
+                </div>
+                <div v-if="true">
+                    <v-menu open-on-hover :close-on-content-click="false">
+                        <template v-slot:activator="{ props }">
+                            <button v-bind="props" class="">
+                                <template v-if="false">
+                                    <NuxtImg src="/img/avatar.png" alt="My Image" height="32" width="32" />
+                                </template>
+                                <template v-if="true">
+                                    <v-icon size="36">mdi-account-circle-outline</v-icon>
+                                </template>
+                            </button>
+                        </template>
+
+                        <v-list class="menu mt-2 relative min-w-200px">
+                            <v-list-item>
+                                <NuxtLink
+                                    :to="`/@${username}`"
+                                    class="block w-full p-2 bg-transparent hover:!bg-gray-100 no-underline text-black"
+                                    ><v-icon class="mr-1">mdi-account-eye</v-icon> Xem hồ sơ</NuxtLink
+                                >
+                            </v-list-item>
+                            <v-divider></v-divider>
+                            <v-list-item>
+                                <button class="p-2 w-full text-left hover:bg-gray-100" @click="handleLogout">
+                                    <v-icon class="mr-1">mdi-logout</v-icon> Đăng xuất
+                                </button>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </div>
             </div>
         </header>
 
@@ -40,9 +80,12 @@ useHead({
             <!-- Nav -->
             <div class="z-10 fixed left-5 top-82px h-[calc(100vh-100px)] py-4 rounded-md shadow-pretty bg-white">
                 <div class="flex flex-col items-center gap-4 p-1">
-                    <button class="w-12 h-12 rounded-full bg-#22e1b9">
+                    <NuxtLink
+                        to="/topic/newPost"
+                        class="w-12 h-12 flex items-center justify-center no-underline outline-none rounded-full !bg-[rgb(255,133,98)]"
+                    >
                         <v-icon class="!text-white">mdi-plus</v-icon>
-                    </button>
+                    </NuxtLink>
                     <NuxtLink
                         to="/"
                         class="flex flex-col justify-center items-center hover:bg-gray-100 rounded-md w-full px-2 py-3 no-underline !text-black"

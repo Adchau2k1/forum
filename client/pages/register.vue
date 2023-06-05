@@ -5,6 +5,7 @@ const email = ref('')
 const password = ref('')
 const rePassword = ref('')
 const loading = ref(false)
+const showMessage = ref(false)
 
 const usernameRules = [
     (v) => !!v || 'Trường dữ liệu bắt buộc!',
@@ -25,11 +26,15 @@ const rePasswordRules = [
 const onSubmit = () => {
     if (!form.value) return
 
+    showMessage.value = true
     loading.value = true
 
     setTimeout(() => (loading.value = false), 2000)
 }
 
+useHead({
+    title: 'Đăng ký tài khoản',
+})
 definePageMeta({
     layout: false,
 })
@@ -37,6 +42,8 @@ definePageMeta({
 
 <template>
     <div class="flex justify-center items-center h-screen bg-gradient-to-r from-green-400 to-purple-300 text-white p-4">
+        <Message v-model="showMessage" message="Đăng ký tài khoản thành công" @onClickClose="showMessage = false" />
+
         <div class="flex items-center justify-center w-70% 2xl:w-50% min-h-70% p-8 rounded-md shadow-xl bg-white">
             <div class="w-1/2 mr-10">
                 <NuxtLink to="/"><NuxtImg src="/img/logo-forum.png" width="400" height="400" /></NuxtLink>

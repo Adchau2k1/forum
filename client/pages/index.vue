@@ -84,12 +84,12 @@ const forumStatistics = {
                 <div class="w-7/10">
                     <div class="flex justify-between items-center">
                         <h2 class="uppercase">Bài viết</h2>
-                        <NuxtLink
+                        <!-- <NuxtLink
                             to="/topic/newPost"
                             class="px-3 py-6px flex items-center rounded-lg font-500 text-15px no-underline text-white bg-[rgb(255,133,98)]"
                         >
                             <v-icon class="text-white mr-1" size="24px">mdi-note-edit-outline</v-icon>Đăng bài
-                        </NuxtLink>
+                        </NuxtLink> -->
                     </div>
                     <div class="mt-8">
                         <div v-for="item of data" class="post-item">
