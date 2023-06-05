@@ -4,6 +4,8 @@ const inputComment = ref('')
 
 const postData = {
     id: 23,
+    usernamePost: 'Admin',
+    postBy: 'Sinh viên GenZ',
     topic: 'Kiến thức',
     title: 'Tại sao nên học code VueJS ?',
     content: `Vue.js là gì? Gọi tắt là Vue (phát âm là /vjuː/, giống như view trong tiếng Anh), Vue.js là một
@@ -18,7 +20,6 @@ const postData = {
             những nguyên tắc cốt lõi và một dự án mẫu. Nếu bạn là một lập trình viên front-end giàu kinh
             nghiệm và muốn hiểu hơn về tương quan giữa Vue và các thư viện hay framework khác, hãy xem phần
             So sánh với các framework khác.`,
-    postBy: 'Sinh viên GenZ',
     postAt: '20/04/2023',
     userPost: 12,
     userLike: 45,
@@ -29,6 +30,7 @@ const postData = {
             {
                 id: 4,
                 imgUrl: '',
+                usernameComment: 'test123',
                 commentBy: 'Superman',
                 content: 'Cảm ơn nội dung hay lắm nhé',
                 userPost: 12,
@@ -39,6 +41,7 @@ const postData = {
             {
                 id: 2,
                 imgUrl: '',
+                usernameComment: 'dev2k1',
                 commentBy: 'Bot',
                 content: 'Bot đã xem',
                 userPost: 12,
@@ -63,7 +66,11 @@ const postData = {
                     <div class="w-130px text-center">
                         <NuxtImg src="/img/avatar.png" alt="avatar" class="w-14 h-14" />
                         <div>
-                            <span class="font-semibold text-sm">{{ postData.postBy }}</span>
+                            <NuxtLink
+                                :to="`/@${postData.usernamePost}`"
+                                class="font-semibold no-underline !text-primary text-sm"
+                                >{{ postData.postBy }}</NuxtLink
+                            >
                             <div class="flex justify-center gap-3">
                                 <div class="text-center">
                                     <v-icon size="18">mdi-newspaper-variant</v-icon>
@@ -106,7 +113,10 @@ const postData = {
                         <div class="w-130px text-center">
                             <NuxtImg src="/img/avatar.png" alt="avatar" class="w-14 h-14" />
                             <div>
-                                <span class="font-semibold text-sm">{{ c.commentBy }}</span>
+                                <NuxtLink :to="`/@${c.usernameComment}`" class="font-semibold no-underline text-sm">{{
+                                    c.commentBy
+                                }}</NuxtLink>
+                                <!-- <span class="font-semibold text-sm">{{ c.commentBy }}</span> -->
                                 <div class="flex justify-center gap-3">
                                     <div class="text-center">
                                         <v-icon size="18">mdi-newspaper-variant</v-icon>
