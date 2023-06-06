@@ -1,6 +1,7 @@
 import express, { json } from 'express'
 import morgan from 'morgan'
 import { config } from 'dotenv'
+import route from './routes/index.js'
 
 async function main() {
     const app = express()
@@ -9,25 +10,8 @@ async function main() {
     app.use(morgan('combined'))
     app.use(json())
     config()
-
-    app.get('/', (req, res) => {
-        res.send('Trang chủ')
-    })
-
-    app.get('/api', (req, res) => {
-        const data = [
-            {
-                id: 1,
-                name: 'Test',
-            },
-            {
-                id: 2,
-                name: 'Admin',
-            },
-        ]
-
-        res.json(data)
-    })
+    // Chạy các route
+    route(app)
 
     const PORT = process.env.PORT
     app.listen(PORT, () => {

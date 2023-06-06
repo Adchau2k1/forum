@@ -4,8 +4,8 @@ node_modules/
 # Ignore log files
 *.log
 
-# Ignore .env file
-.env
+# Tạm thời mở file .env
+# .env
 
 # Ignore compiled code or build artifacts
 dist/
