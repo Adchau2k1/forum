@@ -6,8 +6,8 @@ export default class SiteController {
 
     // [GET] /test/:slug
     show(req, res) {
-        const { id } = req.params
+        const { slug } = req.params
 
-        res.send('Lấy thông tin user: ')
+        res.send('Lấy thông tin user: ' + slug)
     }
 }
