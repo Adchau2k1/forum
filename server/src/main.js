@@ -11,12 +11,12 @@ async function main() {
     const app = express()
 
     // Http logger
-    app.use(morgan('combined'))
+    // app.use(morgan('combined'))
     app.use(json())
     // Routes init
     route(app)
 
-    const PORT = configServices.getPort()
+    const PORT = configServices.getPort() || 5000
     app.listen(PORT, () => {
         console.log(`Server listening on port ${PORT}`)
     })

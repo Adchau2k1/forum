@@ -1,4 +1,4 @@
-export default class PostController {
+export default class TopicController {
     // [GET] /topic
     index(req, res) {
         res.json({

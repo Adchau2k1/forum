@@ -1,9 +1,9 @@
 import siteRouter from './siteRoute.js'
-import topicRouter from './topicRoute.js'
-import userRouter from './userRoute.js'
+import usersRouter from './usersRoute.js'
+import topicsRouter from './topicsRoute.js'
 
 export default function route(app) {
-    app.use('/topic', topicRouter)
-    app.use('/user', userRouter)
+    app.use('/users', usersRouter)
+    app.use('/topics', topicsRouter)
     app.use('/', siteRouter)
 }
