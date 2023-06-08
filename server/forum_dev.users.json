@@ -1,0 +1,17 @@
+[{
+  "_id": {
+    "$oid": "647f6daee763a7ae93506159"
+  },
+  "username": "admin",
+  "checked": true,
+  "fullName": "admin",
+  "email": "admin@example.com",
+  "password": "1",
+  "imageUrl": null,
+  "createdAt": {
+    "$date": "2023-06-06T12:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-06T12:00:00.000Z"
+  }
+}]
