@@ -1,7 +1,3 @@
-import { config } from 'dotenv'
-
-config()
-
 class ConfigServices {
     getPort() {
         return process.env.PORT

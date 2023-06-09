@@ -6,10 +6,12 @@ const userController = new UserController()
 
 route.get('/', userController.getUserAll)
 
-route.get('/:id', userController.getUserById)
+route.get('/:_id', userController.getUserById)
 
 route.post('/login', userController.loginUser)
 
 route.post('/register', userController.createUser)
+
+route.delete('/', userController.deleteUserById)
 
 export default route
