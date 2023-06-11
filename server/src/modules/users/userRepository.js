@@ -1,12 +1,30 @@
 import User from './UserModel.js'
 import bcrypt from 'bcrypt'
 
-export default class UserRepository {
-    async getUserAll({ page, pageSize }) {
+class UserRepository {
+    async getUserAll({ page, pageSize, isAll }) {
         try {
-            const existingUser = await User.find()
-            if (existingUser) {
-                return existingUser
+            const userAll = await User.find()
+
+            page = parseInt(page)
+            pageSize = parseInt(pageSize)
+
+            let filteredUsers
+            if (!isAll) {
+                filteredUsers = await User.aggregate([
+                    {
+                        $match: {},
+                    },
+                    {
+                        $skip: (page - 1) * pageSize,
+                    },
+                    { $limit: pageSize },
+                ])
+            } else filteredUsers = userAll
+
+            if (filteredUsers) {
+                filteredUsers.total = userAll.length
+                return filteredUsers
             }
 
             return { error: 'Không có dữ liệu!' }
@@ -49,18 +67,68 @@ export default class UserRepository {
 
     async createUser({ username, email, password }) {
         try {
+            username = username.toLowerCase()
             const existingUser = await User.findOne({ username })
             if (existingUser) {
                 return { error: 'Tài khoản đã tồn tại!' }
             }
 
-            const passwordHashed = await bcrypt.hash(password, 9)
+            const passwordHashed = await bcrypt.hash(
+                password,
+                parseInt(process.env.PASSWORD_SALT_ROUNDS)
+            )
             const newUser = await User.create({
                 username,
                 email,
                 password: passwordHashed,
                 fullName: username,
             })
+
+            return newUser
+        } catch (err) {
+            return { error: err.message }
+        }
+    }
+
+    async updateUser({
+        _id,
+        email,
+        password,
+        checked,
+        fullName,
+        phone,
+        image_url,
+        userPosts,
+        userLikes,
+    }) {
+        try {
+            const existingUser = await User.findById(_id)
+            if (!existingUser) {
+                return { error: 'Tài khoản không tồn tại!' }
+            }
+
+            let passwordHashed
+            if (password)
+                passwordHashed = await bcrypt.hash(
+                    password,
+                    parseInt(process.env.PASSWORD_SALT_ROUNDS)
+                )
+
+            const updatedAt = new Date()
+            const newUser = await User.updateOne(
+                { _id: _id },
+                {
+                    email,
+                    password: passwordHashed,
+                    checked,
+                    fullName,
+                    phone,
+                    image_url,
+                    userPosts,
+                    userLikes,
+                    updatedAt,
+                }
+            )
 
             return newUser
         } catch (err) {
@@ -83,3 +151,5 @@ export default class UserRepository {
         }
     }
 }
+
+export default new UserRepository()

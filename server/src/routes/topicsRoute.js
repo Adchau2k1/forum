@@ -4,8 +4,8 @@ import TopicController from '../modules/topics/topicController.js'
 const route = Router()
 const topicController = new TopicController()
 
-route.get('/', topicController.index)
+route.get('/', topicController.getTopicAll)
 
-route.get('/:id', topicController.show)
+route.post('/', topicController.createPost)
 
 export default route

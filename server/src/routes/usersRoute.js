@@ -12,6 +12,8 @@ route.post('/login', userController.loginUser)
 
 route.post('/register', userController.createUser)
 
+route.put('/', userController.updateUser)
+
 route.delete('/', userController.deleteUserById)
 
 export default route

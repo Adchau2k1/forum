@@ -1,23 +1,23 @@
-import jwt from 'jsonwebtoken'
-import userRepository from './userRepository.js'
-import { successResponse, errorResponse } from '../../utils/response.js'
+import { errorResponse, successResponse } from '../../utils/response.js'
+import postRepository from './postRepository.js'
 import { DEFAULT_PAGE_SIZE } from '../../common/constants.js'
+import mongoose from 'mongoose'
 
-export default class UserController {
-    // [GET] /users
-    async getUserAll(req, res) {
+export default class PostController {
+    // [GET] /posts
+    async getPostAll(req, res) {
         try {
             const { page = 1, pageSize = DEFAULT_PAGE_SIZE, isAll } = req.query
-            const result = await userRepository.getUserAll({ page, pageSize, isAll })
+            const result = await postRepository.getPostAll({ page, pageSize, isAll })
 
             if (result.error) {
                 res.json(errorResponse({ message: result.error }))
             } else {
-                const newUsers = result.map((user) => {
+                const newPosts = result.map((post) => {
                     let data
-                    if (isAll) data = user._doc
-                    else data = user
-                    const { password, __v, createdAt, updatedAt, ...passProps } = data
+                    if (isAll) data = post._doc
+                    else data = post
+                    const { __v, updatedAt, ...passProps } = data
 
                     return passProps
                 })
@@ -27,7 +27,7 @@ export default class UserController {
                             page: parseInt(page),
                             pageSize: parseInt(pageSize),
                             total: result.total,
-                            data: newUsers,
+                            data: newPosts,
                         },
                     })
                 )
@@ -37,18 +37,18 @@ export default class UserController {
         }
     }
 
-    // [GET] /users/:_id
-    async getUserById(req, res) {
+    // [GET] /posts/:_id
+    async getPostById(req, res) {
         try {
-            const result = await userRepository.getUserById(req.params._id)
+            const result = await postRepository.getPostById(req.params._id)
 
             if (result.error) {
                 res.json(errorResponse({ message: result.error }))
             } else {
-                const { password, __v, createdAt, updatedAt, ...newUser } = result._doc
+                const { __v, updatedAt, ...newPost } = result._doc
                 res.json(
                     successResponse({
-                        data: newUser,
+                        data: newPost,
                     })
                 )
             }
@@ -57,32 +57,34 @@ export default class UserController {
         }
     }
 
-    // [POST] /users/login
-    async loginUser(req, res) {
+    // [GET] /posts/userPosts/:userPostId
+    async getPostAllByUserId(req, res) {
         try {
-            const result = await userRepository.loginUser(req.body)
+            const { page = 1, pageSize = DEFAULT_PAGE_SIZE, isAll } = req.query
+            const userPostId = new mongoose.Types.ObjectId(req.params.userPostId)
+            const result = await postRepository.getPostAllByUserId({
+                userPostId,
+                page,
+                pageSize,
+                isAll,
+            })
 
             if (result.error) {
                 res.json(errorResponse({ message: result.error }))
             } else {
-                const { __v, createdAt, updatedAt, ...newUser } = result._doc
-                const token = jwt.sign(
-                    {
-                        data: newUser,
-                    },
-                    process.env.JWT_SECRET_KEY,
-                    {
-                        expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRATION_TIME,
-                    }
-                )
+                const newPosts = result.map((post) => {
+                    const { __v, updatedAt, ...passProps } = post
 
-                delete newUser.password
-                newUser.token = token
-
+                    return passProps
+                })
                 res.json(
                     successResponse({
-                        message: 'Đăng nhập thành công',
-                        data: newUser,
+                        data: {
+                            page: parseInt(page),
+                            pageSize: parseInt(pageSize),
+                            total: result.total,
+                            data: newPosts,
+                        },
                     })
                 )
             }
@@ -91,21 +93,20 @@ export default class UserController {
         }
     }
 
-    // [POST] /users/register
-    async createUser(req, res) {
+    // [POST] /posts
+    async createPost(req, res) {
         try {
-            const result = await userRepository.createUser(req.body)
+            const result = await postRepository.createPost(req.body)
 
             if (result.error) {
                 res.json(errorResponse({ message: result.error }))
             } else {
                 res.status(201).json(
                     successResponse({
-                        message: 'Đăng ký thành công',
+                        message: 'Đăng bài thành công',
                         data: {
                             _id: result._id,
-                            username: result.username,
-                            email: result.email,
+                            title: result.title,
                         },
                     })
                 )
@@ -115,17 +116,17 @@ export default class UserController {
         }
     }
 
-    // [PUT] /users
-    async updateUser(req, res) {
+    // [PUT] /posts
+    async updatePost(req, res) {
         try {
-            const result = await userRepository.updateUser(req.body)
+            const result = await postRepository.updatePost(req.body)
 
             if (result.error) {
                 res.json(errorResponse({ message: result.error }))
             } else {
                 res.status(201).json(
                     successResponse({
-                        message: 'Cập nhật tài khoản thành công',
+                        message: 'Cập nhật bài viết thành công',
                         data: {
                             _id: req.body._id,
                         },
@@ -137,18 +138,18 @@ export default class UserController {
         }
     }
 
-    // [DELETE] /users
-    async deleteUserById(req, res) {
+    // [DELETE] /posts
+    async deletePostById(req, res) {
         try {
             const { _id } = req.body
-            const result = await userRepository.deleteUserById({ _id })
+            const result = await postRepository.deletePostById({ _id })
 
             if (result.error) {
                 res.json(errorResponse({ message: result.error }))
             } else {
                 res.json(
                     successResponse({
-                        message: 'Xóa tài khoản thành công',
+                        message: 'Xóa bài viết thành công',
                         data: {
                             _id,
                         },

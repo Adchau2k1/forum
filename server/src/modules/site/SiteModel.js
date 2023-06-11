@@ -8,9 +8,6 @@ const User = new Schema({
     checked: { type: Boolean, default: false },
     fullName: { type: String, require: true, maxLength: 24 },
     imageUrl: { type: String, default: '' },
-    userPosts: { type: Number, default: 0 },
-    userLikes: { type: Number, default: 0 },
-    totalLikes: { type: Number, default: 0 },
     createdAt: { type: Date, default: new Date() },
     updatedAt: { type: Date, default: new Date() },
 })
