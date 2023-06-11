@@ -1,21 +1,39 @@
 <script setup>
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '~/stores/userAuthStore' // import the auth store we just created
+
+const { authenticateUser } = useAuthStore()
+const { authenticated } = storeToRefs(useAuthStore())
 const router = useRouter()
 const form = ref(null)
-const username = ref('')
-const password = ref('')
-const visible = ref(false)
-const loading = ref(false)
-const showMessage = ref(false)
+const visiblePassword = ref(false)
+const messageOptions = reactive({
+    show: false,
+    type: 'success',
+    message: 'Đăng nhập thành công',
+})
+const userInfo = reactive({
+    username: '',
+    password: '',
+})
 
 const rules = [(value) => !!value || 'Trường dữ liệu bắt buộc!']
 
-const onSubmit = () => {
+const onSubmit = async () => {
     if (!form.value) return
 
-    loading.value = true
-    showMessage.value = true
-    console.log(router)
-    setTimeout(() => router.push('/'), 3000)
+    const result = await authenticateUser(userInfo)
+    if (authenticated.value) {
+        messageOptions.type = 'success'
+        messageOptions.show = true
+        messageOptions.message = result.message
+
+        router.push('/')
+    } else {
+        messageOptions.type = 'error'
+        messageOptions.show = true
+        messageOptions.message = result.message
+    }
 }
 
 useHead({
@@ -28,7 +46,12 @@ definePageMeta({
 
 <template>
     <div class="flex justify-center items-center h-screen bg-gradient-to-r from-green-400 to-purple-300 text-white p-4">
-        <Message v-model="showMessage" message="Đăng nhập thành công" @onClickClose="showMessage = false" />
+        <Message
+            v-model="messageOptions.show"
+            :type="messageOptions.type"
+            :message="messageOptions.message"
+            @onClickClose="messageOptions.show = false"
+        />
 
         <div class="flex items-center justify-center w-70% 2xl:w-50% min-h-70% p-8 rounded-md shadow-xl bg-white">
             <div class="w-1/2 mr-10">
@@ -42,7 +65,7 @@ definePageMeta({
                     <v-row>
                         <v-col cols="12" class="mt-8">
                             <v-text-field
-                                v-model="username"
+                                v-model="userInfo.username"
                                 :rules="rules"
                                 label="Nhập tài khoản"
                                 variant="solo"
@@ -52,14 +75,14 @@ definePageMeta({
                         </v-col>
                         <v-col cols="12" class="-mt-4">
                             <v-text-field
-                                v-model="password"
+                                v-model="userInfo.password"
                                 :rules="rules"
-                                :type="visible ? 'text' : 'password'"
-                                :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                                :type="visiblePassword ? 'text' : 'password'"
+                                :append-inner-icon="visiblePassword ? 'mdi-eye-off' : 'mdi-eye'"
                                 variant="solo"
                                 label="Mật khẩu"
                                 bg-color="rgba(22,24,35,.06)"
-                                @click:append-inner="visible = !visible"
+                                @click:append-inner="visiblePassword = !visiblePassword"
                             ></v-text-field>
                         </v-col>
                     </v-row>

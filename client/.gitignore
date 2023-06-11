@@ -4,6 +4,9 @@ node_modules
 .nitro
 .cache
 .output
-.env
+
+# Đẩy cả file .env để code
+# .env
+
 dist
 .DS_Store

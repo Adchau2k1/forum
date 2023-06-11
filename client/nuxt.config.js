@@ -25,6 +25,12 @@ export default defineNuxtConfig({
         '/allPage/**/': { ssr: false },
     },
 
+    runtimeConfig: {
+        public: {
+            baseApi: process.env.PUBLIC_API_URL,
+        },
+    },
+
     hooks: {
         'pages:extend'(pages) {
             pages.push({
