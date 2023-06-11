@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     const userStore = useAuthStore(pinia)
 
     const path = to.path
-    if (path === '/login' || path === '/register') return
+    if (path === '/login' || path === '/register') return abortNavigation()
     else {
         const token = useCookie('token')
         if (token.value) {

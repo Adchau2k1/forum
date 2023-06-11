@@ -6,16 +6,17 @@ const props = defineProps({
     timeout: Number,
 })
 
-let icon = 'mdi-check-circle'
+const icon = ref('mdi-check-circle')
+// let icon = 'mdi-check-circle'
 switch (props.type) {
     case 'info':
-        icon = 'mdi-information-variant-circle'
+        icon.value = 'mdi-information-variant-circle'
         break
     case 'warning':
-        icon = 'mdi-alert-octagon'
+        icon.value = 'mdi-alert-octagon'
         break
     case 'error':
-        icon = 'mdi-alert'
+        icon.value = 'mdi-alert'
         break
 }
 

@@ -1,11 +1,19 @@
 <script setup>
+import Message from '~/components/Message.vue'
+import { createUser } from '~/server/api'
+
 const form = ref(null)
-const username = ref('')
-const email = ref('')
-const password = ref('')
-const rePassword = ref('')
-const loading = ref(false)
-const showMessage = ref(false)
+const userInfo = reactive({
+    username: '',
+    email: '',
+    password: '',
+    rePassword: '',
+})
+const messageOptions = reactive({
+    show: false,
+    type: 'success',
+    message: 'Đăng nhập thành công',
+})
 
 const usernameRules = [
     (v) => !!v || 'Trường dữ liệu bắt buộc!',
@@ -20,16 +28,30 @@ const passwordRules = [
 ]
 const rePasswordRules = [
     (v) => !!v || 'Trường dữ liệu bắt buộc!',
-    (v) => v === password.value || 'Nhập lại mật khẩu không khớp!',
+    (v) => v === userInfo.password || 'Nhập lại mật khẩu không khớp!',
 ]
 
 const onSubmit = () => {
     if (!form.value) return
 
-    showMessage.value = true
-    loading.value = true
+    createUser(userInfo)
+        .then((res) => {
+            console.log(res, 'resss')
+            if (res?.data?.success) {
+                messageOptions.show = true
+                messageOptions.type = 'success'
+                messageOptions.message = res?.data?.message
 
-    setTimeout(() => (loading.value = false), 2000)
+                setTimeout(() => navigateTo('/login'), 2000)
+            } else {
+                messageOptions.show = true
+                messageOptions.type = 'error'
+                messageOptions.message = res?.data?.message
+            }
+        })
+        .catch((err) => {
+            console.log('error:', err)
+        })
 }
 
 useHead({
@@ -42,7 +64,12 @@ definePageMeta({
 
 <template>
     <div class="flex justify-center items-center h-screen bg-gradient-to-r from-green-400 to-purple-300 text-white p-4">
-        <Message v-model="showMessage" message="Đăng ký tài khoản thành công" @onClickClose="showMessage = false" />
+        <Message
+            v-model="messageOptions.show"
+            :type="messageOptions.type"
+            :message="messageOptions.message"
+            @onClickClose="messageOptions.show = false"
+        />
 
         <div class="flex items-center justify-center w-70% 2xl:w-50% min-h-70% p-8 rounded-md shadow-xl bg-white">
             <div class="w-1/2 mr-10">
@@ -56,7 +83,7 @@ definePageMeta({
                     <v-row>
                         <v-col cols="12" class="mt-8">
                             <v-text-field
-                                v-model="username"
+                                v-model="userInfo.username"
                                 :rules="usernameRules"
                                 label="Nhập tài khoản"
                                 variant="solo"
@@ -66,7 +93,7 @@ definePageMeta({
                         </v-col>
                         <v-col cols="12" class="-mt-4">
                             <v-text-field
-                                v-model="email"
+                                v-model="userInfo.email"
                                 :rules="emailRules"
                                 label="Nhập email"
                                 variant="solo"
@@ -76,7 +103,7 @@ definePageMeta({
                         </v-col>
                         <v-col cols="12" class="-mt-4">
                             <v-text-field
-                                v-model="password"
+                                v-model="userInfo.password"
                                 :rules="passwordRules"
                                 type="password"
                                 variant="solo"
@@ -86,7 +113,7 @@ definePageMeta({
                         </v-col>
                         <v-col cols="12" class="-mt-4">
                             <v-text-field
-                                v-model="rePassword"
+                                v-model="userInfo.rePassword"
                                 :rules="rePasswordRules"
                                 type="password"
                                 variant="solo"
