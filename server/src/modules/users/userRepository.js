@@ -68,9 +68,13 @@ class UserRepository {
     async createUser({ username, email, password }) {
         try {
             username = username.toLowerCase()
-            const existingUser = await User.findOne({ username })
-            if (existingUser) {
+            const existingUsername = await User.findOne({ username })
+            const existingUserMail = await User.findOne({ email })
+            if (existingUsername) {
                 return { error: 'Tài khoản đã tồn tại!' }
+            }
+            if (existingUserMail) {
+                return { error: 'Email đã tồn tại!' }
             }
 
             const passwordHashed = await bcrypt.hash(

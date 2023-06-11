@@ -1,6 +1,7 @@
 import express, { json } from 'express'
 import morgan from 'morgan'
 import { config } from 'dotenv'
+import cors from 'cors'
 import route from './routes/index.js'
 import { configServices } from './config.js'
 import connect from './database/index.js'
@@ -14,6 +15,7 @@ async function main() {
     const app = express()
     // Http logger
     // app.use(morgan('combined'))
+    app.use(cors())
     // Check đăng nhập
     app.use(checkToken)
     app.use(json())
