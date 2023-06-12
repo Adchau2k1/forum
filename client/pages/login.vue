@@ -1,10 +1,9 @@
 <script setup>
-import { storeToRefs } from 'pinia'
-import { useAuthStore } from '~/stores/userAuthStore' // import the auth store we just created
+import { useUserStore } from '~/stores/userStore'
+import { LOGIN_ENDPOINT } from '~/constants/endpoints'
+// import useApi from '~/composables/useApi'
 
-const { authenticateUser } = useAuthStore()
-const { authenticated } = storeToRefs(useAuthStore())
-const router = useRouter()
+const userStore = useUserStore()
 const form = ref(null)
 const visiblePassword = ref(false)
 const messageOptions = reactive({
@@ -22,17 +21,30 @@ const rules = [(value) => !!value || 'Trường dữ liệu bắt buộc!']
 const onSubmit = async () => {
     if (!form.value) return
 
-    const result = await authenticateUser(userInfo)
-    if (authenticated.value) {
+    const { data } = await useApi.get(
+        LOGIN_ENDPOINT,
+        {
+            body: userInfo,
+        },
+        true,
+    )
+    const loginData = data.value
+
+    if (loginData.success) {
+        const accessToken = useCookie('accessToken')
+        accessToken.value = loginData.data.token
+        userStore.isLogin = true
+        userStore.setUserInfo(loginData.data)
+
         messageOptions.type = 'success'
         messageOptions.show = true
-        messageOptions.message = result.message
+        messageOptions.message = loginData.message
 
-        router.push('/')
+        setTimeout(() => navigateTo('/'), 2000)
     } else {
         messageOptions.type = 'error'
         messageOptions.show = true
-        messageOptions.message = result.message
+        messageOptions.message = loginData.message
     }
 }
 

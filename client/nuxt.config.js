@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 
 export default defineNuxtConfig({
-    modules: ['@unocss/nuxt', '@nuxt/image-edge'],
+    modules: ['@unocss/nuxt', '@nuxt/image-edge', '@pinia/nuxt'],
 
     css: ['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css', '~/assets/css/global.css'],
 
@@ -27,7 +27,7 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
-            baseApi: process.env.PUBLIC_API_URL,
+            baseURL: process.env.NUXT_PUBLIC_API_URL,
         },
     },
 

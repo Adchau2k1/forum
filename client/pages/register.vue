@@ -1,6 +1,5 @@
 <script setup>
 import Message from '~/components/Message.vue'
-import { createUser } from '~/server/api'
 
 const form = ref(null)
 const userInfo = reactive({
@@ -34,24 +33,24 @@ const rePasswordRules = [
 const onSubmit = () => {
     if (!form.value) return
 
-    createUser(userInfo)
-        .then((res) => {
-            console.log(res, 'resss')
-            if (res?.data?.success) {
-                messageOptions.show = true
-                messageOptions.type = 'success'
-                messageOptions.message = res?.data?.message
+    // createUser(userInfo)
+    //     .then((res) => {
+    //         console.log(res, 'resss')
+    //         if (res?.data?.success) {
+    //             messageOptions.show = true
+    //             messageOptions.type = 'success'
+    //             messageOptions.message = res?.data?.message
 
-                setTimeout(() => navigateTo('/login'), 2000)
-            } else {
-                messageOptions.show = true
-                messageOptions.type = 'error'
-                messageOptions.message = res?.data?.message
-            }
-        })
-        .catch((err) => {
-            console.log('error:', err)
-        })
+    //             setTimeout(() => navigateTo('/login'), 2000)
+    //         } else {
+    //             messageOptions.show = true
+    //             messageOptions.type = 'error'
+    //             messageOptions.message = res?.data?.message
+    //         }
+    //     })
+    //     .catch((err) => {
+    //         console.log('error:', err)
+    //     })
 }
 
 useHead({

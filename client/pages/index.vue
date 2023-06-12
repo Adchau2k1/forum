@@ -1,7 +1,6 @@
 <script setup>
 import Message from '~/components/Message.vue'
 import Post from '~/components/Post.vue'
-import Request from '~/composables/useApi'
 
 const showMessage = ref(false)
 // const data = [
