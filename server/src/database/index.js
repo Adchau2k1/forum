@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 import { configServices } from '../config.js'
 
 export default async function connect() {
@@ -8,6 +9,7 @@ export default async function connect() {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
+
         console.log('Kết nối thành công')
     } catch (error) {
         console.log(error)

@@ -65,7 +65,7 @@ export default class UserController {
             if (result.error) {
                 res.json(errorResponse({ message: result.error }))
             } else {
-                const { __v, createdAt, updatedAt, ...newUser } = result._doc
+                const { __v, password, createdAt, updatedAt, ...newUser } = result._doc
                 const token = jwt.sign(
                     {
                         data: newUser,
