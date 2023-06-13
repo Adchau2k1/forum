@@ -1,58 +1,59 @@
 <script setup>
 import Message from '~/components/Message.vue'
 import Post from '~/components/Post.vue'
+import { USERS_ENDPOINT } from '~/constants/endpoints'
 
 const showMessage = ref(false)
-// const data = [
-//     {
-//         id: 1,
-//         imgUrl: '',
-//         postBy: 'Văn Dev',
-//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng là chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python.',
-//         topic: 'Chuyên mục',
-//         postAt: '21/05/2023',
-//         views: 500,
-//         likes: 220,
-//         comments: 45,
-//     },
-//     {
-//         id: 2,
-//         imgUrl: '',
-//         postBy: 'Văn Dev',
-//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
-//         topic: 'Chuyên mục',
-//         postAt: '21/05/2023',
-//         views: 500,
-//         likes: 220,
-//         comments: 45,
-//     },
-//     {
-//         id: 3,
-//         imgUrl: '',
-//         postBy: 'Văn Dev',
-//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
-//         topic: 'Chuyên mục',
-//         postAt: '21/05/2023',
-//         views: 500,
-//         likes: 220,
-//         comments: 45,
-//     },
-//     {
-//         id: 4,
-//         imgUrl: '',
-//         postBy: 'Văn Dev',
-//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
-//         topic: 'Chuyên mục',
-//         postAt: '21/05/2023',
-//         views: 500,
-//         likes: 220,
-//         comments: 45,
-//     },
-// ]
+const data = [
+    {
+        id: 1,
+        imgUrl: '',
+        postBy: 'Văn Dev',
+        title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
+        desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng là chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python.',
+        topic: 'Chuyên mục',
+        postAt: '21/05/2023',
+        views: 500,
+        likes: 220,
+        comments: 45,
+    },
+    {
+        id: 2,
+        imgUrl: '',
+        postBy: 'Văn Dev',
+        title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
+        desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
+        topic: 'Chuyên mục',
+        postAt: '21/05/2023',
+        views: 500,
+        likes: 220,
+        comments: 45,
+    },
+    {
+        id: 3,
+        imgUrl: '',
+        postBy: 'Văn Dev',
+        title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
+        desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
+        topic: 'Chuyên mục',
+        postAt: '21/05/2023',
+        views: 500,
+        likes: 220,
+        comments: 45,
+    },
+    {
+        id: 4,
+        imgUrl: '',
+        postBy: 'Văn Dev',
+        title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
+        desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
+        topic: 'Chuyên mục',
+        postAt: '21/05/2023',
+        views: 500,
+        likes: 220,
+        comments: 45,
+    },
+]
 const postTop = [
     {
         id: 1,
@@ -73,6 +74,9 @@ const forumStatistics = {
     members: 3156,
     aveVisit: 210,
 }
+
+const { data: t } = await useApi.get(USERS_ENDPOINT)
+console.log(t)
 </script>
 
 <template>

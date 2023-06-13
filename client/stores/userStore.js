@@ -7,14 +7,14 @@ export const useUserStore = defineStore('user', {
     }),
 
     actions: {
+        setUserInfo(value) {
+            this.userInfo = value
+        },
+
         logOut() {
             const accessToken = useCookie('accessToken')
             this.isLogin = false
             accessToken.value = null // clear the token cookie
-        },
-
-        setUserInfo(value) {
-            this.userInfo = value
         },
     },
 })

@@ -1,7 +1,6 @@
 <script setup>
 import { useUserStore } from '~/stores/userStore'
 import { LOGIN_ENDPOINT } from '~/constants/endpoints'
-// import useApi from '~/composables/useApi'
 
 const userStore = useUserStore()
 const form = ref(null)
@@ -21,13 +20,14 @@ const rules = [(value) => !!value || 'Trường dữ liệu bắt buộc!']
 const onSubmit = async () => {
     if (!form.value) return
 
-    const { data } = await useApi.get(
+    const { data } = await useApi.post(
         LOGIN_ENDPOINT,
         {
             body: userInfo,
         },
         true,
     )
+
     const loginData = data.value
 
     if (loginData.success) {
