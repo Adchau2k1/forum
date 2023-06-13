@@ -1,6 +1,6 @@
 // import { createPinia } from 'pinia'
 import { useJwt } from '@vueuse/integrations/useJwt'
-import { useUserStore } from '~/stores/userStore'
+// import { useUserStore } from '~/stores/userStore'
 
 export default defineNuxtRouteMiddleware((to, from) => {
     // const pinia = createPinia()

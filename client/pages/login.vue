@@ -1,7 +1,11 @@
 <script setup>
 import { useUserStore } from '~/stores/userStore'
+<<<<<<< HEAD
 import { LOGIN_ENDPOINT } from '~/constants/endpoints'
+=======
+>>>>>>> 8e4b07d9a77db17309c47db15386e575ef39cfa6
 
+const { restAPI } = useApi()
 const userStore = useUserStore()
 const form = ref(null)
 const visiblePassword = ref(false)
@@ -20,6 +24,7 @@ const rules = [(value) => !!value || 'Trường dữ liệu bắt buộc!']
 const onSubmit = async () => {
     if (!form.value) return
 
+<<<<<<< HEAD
     const { data } = await useApi.post(
         LOGIN_ENDPOINT,
         {
@@ -28,6 +33,11 @@ const onSubmit = async () => {
         true,
     )
 
+=======
+    const { data } = await restAPI.user.login({
+        body: userInfo,
+    })
+>>>>>>> 8e4b07d9a77db17309c47db15386e575ef39cfa6
     const loginData = data.value
 
     if (loginData.success) {
