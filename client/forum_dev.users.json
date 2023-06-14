@@ -1,0 +1,198 @@
+[{
+  "_id": {
+    "$oid": "648881981c9f8d9eaa9d21d7"
+  },
+  "username": "admin",
+  "email": "admin@email.com",
+  "password": "$2b$09$b1UNZTr322PqqtImH5FJkOA3Fodlth6aru4/jkwqLr8Scky6PeZO2",
+  "phone": "",
+  "checked": false,
+  "fullName": "Admin",
+  "imageUrl": "",
+  "userPosts": 4,
+  "userLikes": 5,
+  "totalLikes": 0,
+  "createdAt": {
+    "$date": "2023-06-13T14:47:52.479Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-14T17:32:51.261Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "648881a71c9f8d9eaa9d21db"
+  },
+  "username": "test123",
+  "email": "Test@email.com",
+  "password": "$2b$09$Te8.fuM.VFlDEsbBykekDu/xGQroOCsQTRY4.wnrmfkCihB.yAIAy",
+  "phone": "",
+  "checked": false,
+  "fullName": "test123",
+  "imageUrl": "",
+  "userPosts": 0,
+  "userLikes": 0,
+  "totalLikes": 0,
+  "createdAt": {
+    "$date": "2023-06-13T14:48:07.764Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-13T14:48:07.764Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6489c73c4e68615800fccbbe"
+  },
+  "username": "tester",
+  "email": "test@g.com",
+  "password": "$2b$09$z2Ya3xNEJqS1vKQMNM/.vO/5YXX74.OziB8KU0O8yM.pyg3Nwl13q",
+  "phone": "",
+  "checked": false,
+  "fullName": "tester",
+  "imageUrl": "",
+  "userPosts": 0,
+  "userLikes": 0,
+  "totalLikes": 0,
+  "createdAt": {
+    "$date": "2023-06-14T13:57:16.879Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-14T13:57:16.879Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6489c7834e68615800fccbc2"
+  },
+  "username": "admin1",
+  "email": "aa@ttt.com",
+  "password": "$2b$09$xG6jy3imlQJPDL2YXd3BreUM0Aof4dtsaxPzIpXv6Rhfy4c/KiW4O",
+  "phone": "",
+  "checked": false,
+  "fullName": "admin1",
+  "imageUrl": "",
+  "userPosts": 0,
+  "userLikes": 0,
+  "totalLikes": 0,
+  "createdAt": {
+    "$date": "2023-06-14T13:58:27.254Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-14T13:58:27.254Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6489c8384e68615800fccbce"
+  },
+  "username": "admin2",
+  "email": "11@gg.com",
+  "password": "$2b$09$Ti.7n1PsIHMtxjRFVBbveuhzELbj6DSBAYWtQkH4ifoh02n6ablHO",
+  "phone": "",
+  "checked": false,
+  "fullName": "admin2",
+  "imageUrl": "",
+  "userPosts": 0,
+  "userLikes": 0,
+  "totalLikes": 0,
+  "createdAt": {
+    "$date": "2023-06-14T14:01:28.699Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-14T14:01:28.699Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6489c8424e68615800fccbe2"
+  },
+  "username": "admin3",
+  "email": "112@gg.com",
+  "password": "$2b$09$515ty.ijdqCCrwWIS1a1/.q.HmL7wtbKns1Vn58RZp0d/LV5g8YrS",
+  "phone": "",
+  "checked": false,
+  "fullName": "admin3",
+  "imageUrl": "",
+  "userPosts": 0,
+  "userLikes": 0,
+  "totalLikes": 0,
+  "createdAt": {
+    "$date": "2023-06-14T14:01:38.706Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-14T14:01:38.706Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6489c8424e68615800fccbe4"
+  },
+  "username": "admin3",
+  "email": "112@gg.com",
+  "password": "$2b$09$aOLkbFTek7l4jBwzK4o7zuheb29K6/x1h87.RlD5fHxge8dRyBrYG",
+  "phone": "",
+  "checked": false,
+  "fullName": "admin3",
+  "imageUrl": "",
+  "userPosts": 0,
+  "userLikes": 0,
+  "totalLikes": 0,
+  "createdAt": {
+    "$date": "2023-06-14T14:01:38.709Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-14T14:01:38.709Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6489c8424e68615800fccbe6"
+  },
+  "username": "admin3",
+  "email": "112@gg.com",
+  "password": "$2b$09$5b2P.FR1PknIbelJlsmQIOfblW7A22R6ru/gzfupRHmCJekESpXYu",
+  "phone": "",
+  "checked": false,
+  "fullName": "admin3",
+  "imageUrl": "",
+  "userPosts": 0,
+  "userLikes": 0,
+  "totalLikes": 0,
+  "createdAt": {
+    "$date": "2023-06-14T14:01:38.712Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-14T14:01:38.712Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6489c8834e68615800fccbef"
+  },
+  "username": "admin4",
+  "email": "111tt@gmail.com",
+  "password": "$2b$09$jhTN0kOmhMInCybTJxmokOCvk37pdShU3SPMUGL/K2LsV84gxEToa",
+  "phone": "",
+  "checked": false,
+  "fullName": "admin4",
+  "imageUrl": "",
+  "userPosts": 0,
+  "userLikes": 0,
+  "totalLikes": 0,
+  "createdAt": {
+    "$date": "2023-06-14T14:02:43.223Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-14T14:02:43.223Z"
+  },
+  "__v": 0
+}]

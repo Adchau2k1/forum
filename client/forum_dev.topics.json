@@ -1,0 +1,39 @@
+[{
+  "_id": {
+    "$oid": "648490228dd42fb36a77f91d"
+  },
+  "corner": "Góc học tập",
+  "title": "Kiến thức",
+  "desc": "Hướng dẫn sử dụng các chức năng trên Kênh Sinh Viên và các thông báo hoạt động nội bộ",
+  "totalPosts": 0,
+  "postShowId": {
+    "$oid": "64848ae0623fbc5360da6b2d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "648492d9880c140c6c17ca2f"
+  },
+  "corner": "Góc học tập",
+  "title": "Chuyên ngành",
+  "desc": "Hướng dẫn sử dụng các chức năng trên Kênh Sinh Viên và các thông báo hoạt động nội bộ",
+  "totalPosts": 0,
+  "postShowId": {
+    "$oid": "64848ae0623fbc5360da6b2d"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "648492f7880c140c6c17ca31"
+  },
+  "corner": "Góc học tập",
+  "title": "Tài liệu",
+  "desc": "Hướng dẫn sử dụng các chức năng trên Kênh Sinh Viên và các thông báo hoạt động nội bộ",
+  "totalPosts": 0,
+  "postShowId": {
+    "$oid": "64848ae0623fbc5360da6b2d"
+  },
+  "__v": 0
+}]

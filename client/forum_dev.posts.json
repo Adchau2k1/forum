@@ -1,0 +1,189 @@
+[{
+  "_id": {
+    "$oid": "648882c71c9f8d9eaa9d21e3"
+  },
+  "topicId": {
+    "$oid": "648492d9880c140c6c17ca2f"
+  },
+  "postBy": "Admin",
+  "title": "Bài của Test",
+  "content": "Không biết viết gì hehe",
+  "userPosts": 1,
+  "userLikes": 10,
+  "totalLikes": 0,
+  "comments": {
+    "total": 1,
+    "data": [
+      {
+        "_id": "1",
+        "imageUrl": "",
+        "username": "admin",
+        "commentBy": "Admin",
+        "content": "Chịu thôi ahihhii",
+        "userPosts": 4,
+        "totalLikes": 0,
+        "createdAt": {
+          "$date": "2023-06-14T17:40:56.277Z"
+        },
+        "updatedAt": {
+          "$date": "2023-06-14T17:40:56.277Z"
+        }
+      }
+    ]
+  },
+  "createdAt": {
+    "$date": "2023-06-13T14:47:43.670Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-14T17:58:32.335Z"
+  },
+  "__v": 0,
+  "topicTitle": "Góc học tập",
+  "usernamePost": "admin"
+},
+{
+  "_id": {
+    "$oid": "648882ca1c9f8d9eaa9d21e5"
+  },
+  "topicId": {
+    "$oid": "648492d9880c140c6c17ca2f"
+  },
+  "postBy": "Admin",
+  "title": "Bài của Châu",
+  "content": "Không biết viết gì hehe",
+  "userPosts": 4,
+  "userLikes": 22,
+  "totalLikes": 0,
+  "comments": {
+    "total": 1,
+    "data": [
+      {
+        "_id": "1",
+        "imageUrl": "",
+        "username": "admin",
+        "commentBy": "Admin",
+        "content": "Alo memmmeeee",
+        "userPosts": 4,
+        "totalLikes": 0,
+        "createdAt": {
+          "$date": "2023-06-14T18:00:39.411Z"
+        },
+        "updatedAt": {
+          "$date": "2023-06-14T18:00:39.411Z"
+        }
+      }
+    ]
+  },
+  "createdAt": {
+    "$date": "2023-06-13T14:47:43.670Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-14T18:00:57.418Z"
+  },
+  "__v": 0,
+  "topicTitle": "Góc học tập",
+  "usernamePost": "admin"
+},
+{
+  "_id": {
+    "$oid": "648883051c9f8d9eaa9d21e7"
+  },
+  "topicId": {
+    "$oid": "648492d9880c140c6c17ca2f"
+  },
+  "postBy": "test123",
+  "title": "Bài của Test",
+  "content": "Không biết viết gì hehe",
+  "userPosts": 1,
+  "userLikes": 10,
+  "totalLikes": 0,
+  "comments": {
+    "total": 5,
+    "data": [
+      {
+        "_id": "1",
+        "imageUrl": "",
+        "username": "admin",
+        "commentBy": "Admin",
+        "content": "Đi ngủ thôi ahihi",
+        "userPosts": 4,
+        "totalLikes": 0,
+        "createdAt": {
+          "$date": "2023-06-14T18:00:39.411Z"
+        },
+        "updatedAt": {
+          "$date": "2023-06-14T18:00:39.411Z"
+        }
+      },
+      {
+        "_id": "2",
+        "imageUrl": "",
+        "username": "admin",
+        "commentBy": "Admin",
+        "content": "test comment thử",
+        "userPosts": 4,
+        "totalLikes": 0,
+        "createdAt": {
+          "$date": "2023-06-14T18:02:09.409Z"
+        },
+        "updatedAt": {
+          "$date": "2023-06-14T18:02:09.409Z"
+        }
+      },
+      {
+        "_id": "3",
+        "imageUrl": "",
+        "username": "admin",
+        "commentBy": "Admin",
+        "content": "Comment tiếp thôi",
+        "userPosts": 4,
+        "totalLikes": 0,
+        "createdAt": {
+          "$date": "2023-06-14T18:02:09.409Z"
+        },
+        "updatedAt": {
+          "$date": "2023-06-14T18:02:09.409Z"
+        }
+      },
+      {
+        "_id": "4",
+        "imageUrl": "",
+        "username": "admin",
+        "commentBy": "Admin",
+        "content": "Test nữa nè",
+        "userPosts": 4,
+        "totalLikes": 0,
+        "createdAt": {
+          "$date": "2023-06-14T18:02:09.409Z"
+        },
+        "updatedAt": {
+          "$date": "2023-06-14T18:02:09.409Z"
+        }
+      },
+      {
+        "_id": "5",
+        "imageUrl": "",
+        "username": "admin",
+        "commentBy": "Admin",
+        "content": "Oke nhé bạn",
+        "userPosts": 4,
+        "totalLikes": 0,
+        "createdAt": {
+          "$date": "2023-06-14T18:02:09.409Z"
+        },
+        "updatedAt": {
+          "$date": "2023-06-14T18:02:09.409Z"
+        }
+      }
+    ]
+  },
+  "createdAt": {
+    "$date": "2023-06-13T14:47:43.670Z"
+  },
+  "updatedAt": {
+    "$date": "2023-06-14T18:14:58.061Z"
+  },
+  "__v": 0,
+  "topicTitle": "Góc học tập",
+  "usernamePost": "test123"
+}]
