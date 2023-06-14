@@ -99,7 +99,7 @@ class PostRepository {
         }
     }
 
-    async updatePost({ _id, title, content, userPosts, userLikes }) {
+    async updatePost({ _id, title, content, userPosts, userLikes, comments }) {
         try {
             const existingPost = await Post.findById({ _id })
             if (!existingPost) {
@@ -107,13 +107,17 @@ class PostRepository {
             }
 
             const updatedAt = new Date()
-            const newPost = await Post.updateOne({
-                title,
-                content,
-                userPosts,
-                userLikes,
-                updatedAt,
-            })
+            const newPost = await Post.updateOne(
+                { _id },
+                {
+                    title,
+                    content,
+                    userPosts,
+                    userLikes,
+                    comments,
+                    updatedAt,
+                }
+            )
 
             return newPost
         } catch (err) {

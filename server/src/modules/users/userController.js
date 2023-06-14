@@ -76,8 +76,7 @@ export default class UserController {
                     }
                 )
 
-                delete newUser.password
-                newUser.token = token
+                newUser.accessToken = token
 
                 res.json(
                     successResponse({

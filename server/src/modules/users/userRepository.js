@@ -104,6 +104,7 @@ class UserRepository {
         image_url,
         userPosts,
         userLikes,
+        totalLikes,
     }) {
         try {
             const existingUser = await User.findById(_id)
@@ -120,7 +121,7 @@ class UserRepository {
 
             const updatedAt = new Date()
             const newUser = await User.updateOne(
-                { _id: _id },
+                { _id },
                 {
                     email,
                     password: passwordHashed,
@@ -130,6 +131,7 @@ class UserRepository {
                     image_url,
                     userPosts,
                     userLikes,
+                    totalLikes,
                     updatedAt,
                 }
             )
