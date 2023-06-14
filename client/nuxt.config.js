@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 
 export default defineNuxtConfig({
-    modules: ['@unocss/nuxt', '@nuxt/image-edge', '@pinia/nuxt'],
+    modules: ['@unocss/nuxt', '@nuxt/image-edge', '@pinia/nuxt', 'dayjs-nuxt'],
 
     css: ['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css', '~/assets/css/global.css'],
 

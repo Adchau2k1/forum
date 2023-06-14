@@ -2,57 +2,58 @@
 import Message from '~/components/Message.vue'
 import Post from '~/components/Post.vue'
 
+const { restAPI } = useApi()
 const showMessage = ref(false)
-const data = [
-    {
-        id: 1,
-        imgUrl: '',
-        postBy: 'Văn Dev',
-        title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-        desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng là chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python.',
-        topic: 'Chuyên mục',
-        postAt: '21/05/2023',
-        views: 500,
-        likes: 220,
-        comments: 45,
-    },
-    {
-        id: 2,
-        imgUrl: '',
-        postBy: 'Văn Dev',
-        title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-        desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
-        topic: 'Chuyên mục',
-        postAt: '21/05/2023',
-        views: 500,
-        likes: 220,
-        comments: 45,
-    },
-    {
-        id: 3,
-        imgUrl: '',
-        postBy: 'Văn Dev',
-        title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-        desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
-        topic: 'Chuyên mục',
-        postAt: '21/05/2023',
-        views: 500,
-        likes: 220,
-        comments: 45,
-    },
-    {
-        id: 4,
-        imgUrl: '',
-        postBy: 'Văn Dev',
-        title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-        desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
-        topic: 'Chuyên mục',
-        postAt: '21/05/2023',
-        views: 500,
-        likes: 220,
-        comments: 45,
-    },
-]
+// const data = [
+//     {
+//         id: 1,
+//         imgUrl: '',
+//         postBy: 'Văn Dev',
+//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
+//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng là chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python.',
+//         topic: 'Chuyên mục',
+//         postAt: '21/05/2023',
+//         views: 500,
+//         likes: 220,
+//         comments: 45,
+//     },
+//     {
+//         id: 2,
+//         imgUrl: '',
+//         postBy: 'Văn Dev',
+//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
+//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
+//         topic: 'Chuyên mục',
+//         postAt: '21/05/2023',
+//         views: 500,
+//         likes: 220,
+//         comments: 45,
+//     },
+//     {
+//         id: 3,
+//         imgUrl: '',
+//         postBy: 'Văn Dev',
+//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
+//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
+//         topic: 'Chuyên mục',
+//         postAt: '21/05/2023',
+//         views: 500,
+//         likes: 220,
+//         comments: 45,
+//     },
+//     {
+//         id: 4,
+//         imgUrl: '',
+//         postBy: 'Văn Dev',
+//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
+//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
+//         topic: 'Chuyên mục',
+//         postAt: '21/05/2023',
+//         views: 500,
+//         likes: 220,
+//         comments: 45,
+//     },
+// ]
 const postTop = [
     {
         id: 1,
@@ -74,8 +75,14 @@ const forumStatistics = {
     aveVisit: 210,
 }
 
-// const { data: t } = await useApi.get(USERS_ENDPOINT)
-// console.log(t)
+const { data: resPosts } = await restAPI.user.getShowPosts({})
+const dataShowPosts = ref(resPosts.value)
+
+const { data: resTopPosts } = await restAPI.user.getTopPosts({})
+const dataTopPosts = ref(resTopPosts.value)
+
+const { data: resStatistics } = await restAPI.user.getForumStatistics({})
+const dataStatistics = ref(resStatistics.value)
 </script>
 
 <template>
@@ -87,15 +94,9 @@ const forumStatistics = {
                 <div class="w-7/10">
                     <div class="flex justify-between items-center">
                         <h2 class="uppercase">Bài viết</h2>
-                        <!-- <NuxtLink
-                            to="/topic/newPost"
-                            class="px-3 py-6px flex items-center rounded-lg font-500 text-15px no-underline text-white bg-[rgb(255,133,98)]"
-                        >
-                            <v-icon class="text-white mr-1" size="24px">mdi-note-edit-outline</v-icon>Đăng bài
-                        </NuxtLink> -->
                     </div>
                     <div class="mt-8">
-                        <div v-for="item of data" class="post-item">
+                        <div v-for="item of dataShowPosts?.data" class="post-item">
                             <Post v-bind="item" />
                         </div>
                     </div>
@@ -105,8 +106,8 @@ const forumStatistics = {
                     <h4 class="uppercase">Các chủ đề được dề xuất</h4>
                     <div class="min-h-90 mt-4 p-4 rounded-md bg-gradient-to-b to-purple-300 from-green-300">
                         <h3 class="mb-4 text-blue-700">Bài viết nổi bật</h3>
-                        <div v-for="item of postTop" :key="item.id" class="w-full post-top-item">
-                            <NuxtLink :to="item.url" class="w-full mt-3 !no-underline font-500"
+                        <div v-for="item of dataTopPosts?.data" :key="item.id" class="w-full post-top-item">
+                            <NuxtLink :to="`/topic/${item._id}`" class="w-full mt-3 !no-underline font-500"
                                 ><span>{{ item.title }}</span> - <span>[{{ item.postBy }}]</span>
                             </NuxtLink>
                         </div>
@@ -117,19 +118,19 @@ const forumStatistics = {
                         <div class="mt-4 font-300">
                             <p class="flex justify-between">
                                 <span class="opacity-95">Chủ đề:</span
-                                ><span class="font-500">{{ forumStatistics.topics }}</span>
+                                ><span class="font-500">{{ dataStatistics?.data?.topics }}</span>
                             </p>
                             <p class="flex justify-between">
                                 <span class="opacity-95">Bài viết:</span
-                                ><span class="font-500">{{ forumStatistics.posts }}</span>
+                                ><span class="font-500">{{ dataStatistics?.data?.posts }}</span>
                             </p>
                             <p class="flex justify-between">
                                 <span class="opacity-95">Thành viên: </span
-                                ><span class="font-500">{{ forumStatistics.members }}</span>
+                                ><span class="font-500">{{ dataStatistics?.data?.members }}</span>
                             </p>
                             <p class="flex justify-between">
                                 <span class="opacity-95">Lượt truy cập trung bình:</span
-                                ><span class="font-500">{{ forumStatistics.aveVisit }}</span>
+                                ><span class="font-500">{{ dataStatistics?.data?.aveVisit }}</span>
                             </p>
                         </div>
                     </div>

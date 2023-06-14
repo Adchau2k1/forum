@@ -1,64 +1,75 @@
 <script setup>
-const route = useRoute()
-const inputComment = ref('')
+import { useUserStore } from '~/stores/userStore'
 
-const postData = {
-    id: 23,
-    usernamePost: 'Admin',
-    postBy: 'Sinh viên GenZ',
-    topic: 'Kiến thức',
-    title: 'Tại sao nên học code VueJS ?',
-    content: `Vue.js là gì? Gọi tắt là Vue (phát âm là /vjuː/, giống như view trong tiếng Anh), Vue.js là một
-            framework linh động (nguyên bản tiếng Anh: progressive – tiệm tiến) dùng để xây dựng giao diện
-            người dùng (user interfaces). Khác với các framework nguyên khối (monolithic), Vue được thiết kế
-            từ đầu theo hướng cho phép và khuyến khích việc phát triển ứng dụng theo từng bước. Khi phát
-            triển lớp giao diện (view layer), người dùng chỉ cần dùng thư viện lõi (core library) của Vue,
-            vốn rất dễ học và tích hợp với các thư viện hoặc dự án có sẵn. Cùng lúc đó, nếu kết hợp với
-            những kĩ thuật hiện đại như SFC (single file components) và các thư viện hỗ trợ, Vue cũng đáp
-            ứng được dễ dàng nhu cầu xây dựng những ứng dụng một trang (SPA - Single-Page Applications) với
-            độ phức tạp cao hơn nhiều. Nếu bạn muốn tìm hiểu thêm về Vue, chúng tôi đã tạo một video clip về
-            những nguyên tắc cốt lõi và một dự án mẫu. Nếu bạn là một lập trình viên front-end giàu kinh
-            nghiệm và muốn hiểu hơn về tương quan giữa Vue và các thư viện hay framework khác, hãy xem phần
-            So sánh với các framework khác.`,
-    postAt: '20/04/2023',
-    userPost: 12,
-    userLike: 45,
-    likes: 220,
-    data: {
-        total: 2,
-        comments: [
-            {
-                id: 4,
-                imgUrl: '',
-                usernameComment: 'test123',
-                commentBy: 'Superman',
-                content: 'Cảm ơn nội dung hay lắm nhé',
-                userPost: 12,
-                userLike: 45,
-                likes: 0,
-                commentAt: '20/04/2023',
-            },
-            {
-                id: 2,
-                imgUrl: '',
-                usernameComment: 'dev2k1',
-                commentBy: 'Bot',
-                content: 'Bot đã xem',
-                userPost: 12,
-                userLike: 45,
-                likes: 2,
-                commentAt: '20/04/2023',
-            },
-        ],
-    },
+const userStore = useUserStore()
+const { restAPI } = useApi()
+const route = useRoute()
+const { idPost } = route.params
+const inputComment = ref('')
+const { data: resPost, refresh: refreshPost } = await restAPI.user.getPostById(idPost)
+const postData = ref(resPost.value?.data)
+
+// console.log(toRaw(postData.value))
+
+const isInvalid = ref(false)
+const errorMessage = ref('')
+
+// Kiểm tra quy tắc khi người dùng nhập liệu
+const validate = () => {
+    if (inputComment.value) {
+        if (inputComment.value.length >= 9) {
+            isInvalid.value = false
+            errorMessage.value = ''
+        } else {
+            isInvalid.value = true
+            errorMessage.value = 'Vui lòng nhập ít nhất 10 ký tự!'
+        }
+    } else isInvalid.value = false
 }
+
+const handleComment = async () => {
+    if (inputComment.value.length > 9) {
+        const newData = {
+            ...postData.value,
+            comments: {
+                total: postData.value.comments.total + 1,
+                data: [
+                    ...postData.value?.comments?.data,
+                    {
+                        _id: postData.value.comments.total + 1,
+                        imageUrl: userStore.userInfo.imageUrl,
+                        username: userStore.userInfo.username,
+                        commentBy: userStore.userInfo.fullName,
+                        content: inputComment.value,
+                        userPosts: userStore.userInfo.userPosts,
+                        totalLikes: userStore.userInfo.totalLikes,
+                    },
+                ],
+            },
+        }
+
+        const { data } = await restAPI.user.updatePost({
+            body: newData,
+        })
+        try {
+            if (data.value?.success) {
+                inputComment.value = ''
+                postData.value = newData
+            }
+        } catch (err) {
+            console.error(err)
+        }
+    }
+}
+
+const handleLike = (_id) => {}
 </script>
 
 <template>
     <NuxtLayout
         ><div>
             <h4 class="px-4 py-2 font-normal text-white bg-#213547">
-                Bài viết > <span class="font-semibold">{{ postData.topic }}</span>
+                Bài viết > <span class="font-semibold">{{ postData.topicTitle }}</span>
             </h4>
             <h2 class="mt-3">{{ postData.title }}</h2>
             <div class="mt-4 p-3 bg-gray-100">
@@ -74,11 +85,11 @@ const postData = {
                             <div class="flex justify-center gap-3">
                                 <div class="text-center">
                                     <v-icon size="18">mdi-newspaper-variant</v-icon>
-                                    <div class="text-sm">{{ postData.userPost }}</div>
+                                    <div class="text-sm">{{ postData.userPosts }}</div>
                                 </div>
                                 <div class="text-center">
                                     <v-icon size="18">mdi-thumb-up</v-icon>
-                                    <div class="text-sm">{{ postData.userLike }}</div>
+                                    <div class="text-sm">{{ postData.userLikes }}</div>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +97,7 @@ const postData = {
                     <div class="post relative ml-4 flex-1 px-4 py-3 rounded-md bg-white">
                         <div class="flex justify-between text-sm">
                             <span class="font-bold">#1</span>
-                            <div>{{ postData.postAt }}</div>
+                            <div>{{ formatNormal(postData.createdAt) }}</div>
                         </div>
                         <v-divider class="mt-1 mb-3"></v-divider>
                         <div class="">
@@ -108,23 +119,23 @@ const postData = {
                 </div>
 
                 <!-- Comment -->
-                <div class="">
-                    <div class="flex mt-6" v-for="(c, idx) of postData.data.comments">
+                <div class="mt-14">
+                    <div class="flex mt-10" v-for="(c, idx) of postData.comments.data" :key="idx">
                         <div class="w-130px text-center">
-                            <NuxtImg src="/img/avatar.png" alt="avatar" class="w-14 h-14" />
+                            <NuxtImg :src="c.imageUrl || '/img/avatar.png'" alt="avatar" class="w-14 h-14" />
                             <div>
-                                <NuxtLink :to="`/@${c.usernameComment}`" class="font-semibold no-underline text-sm">{{
+                                <NuxtLink :to="`/@${c.username}`" class="font-semibold no-underline text-sm">{{
                                     c.commentBy
                                 }}</NuxtLink>
                                 <!-- <span class="font-semibold text-sm">{{ c.commentBy }}</span> -->
                                 <div class="flex justify-center gap-3">
                                     <div class="text-center">
                                         <v-icon size="18">mdi-newspaper-variant</v-icon>
-                                        <div class="text-sm">{{ c.userPost }}</div>
+                                        <div class="text-sm">{{ c.userPosts?.toString() }}</div>
                                     </div>
                                     <div class="text-center">
                                         <v-icon size="18">mdi-thumb-up</v-icon>
-                                        <div class="text-sm">{{ c.userLike }}</div>
+                                        <div class="text-sm">{{ c.totalLikes?.toString() }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +143,7 @@ const postData = {
                         <div class="post relative ml-4 flex-1 px-4 py-3 rounded-md bg-white">
                             <div class="flex justify-between text-sm">
                                 <span class="font-bold">#{{ idx + 2 }}</span>
-                                <div>{{ c.commentAt }}</div>
+                                <div>{{ formatNormal(c.createdAt) }}</div>
                             </div>
                             <v-divider class="mt-1 mb-3"></v-divider>
                             <div class="">
@@ -155,16 +166,19 @@ const postData = {
                 </div>
 
                 <!-- New comment -->
-                <div class="flex mt-6">
+                <div class="flex mt-10">
                     <div class="w-130px"></div>
                     <div class="relative ml-4 h-full flex-1 p-3 bg-white">
                         <textarea
                             class="w-full px-3 py-2 rounded-md outline-slate-400 bg-gray-200"
+                            :class="{ '!outline-red-500': isInvalid }"
                             v-model="inputComment"
                             rows="3"
+                            @input="validate"
                         />
+                        <p v-if="isInvalid" class="text-red-500 text-sm">{{ errorMessage }}</p>
                         <div class="mt-2 text-right">
-                            <v-btn class="!text-xs !bg-primary">Bình luận</v-btn>
+                            <v-btn class="!text-xs !bg-primary" @click="handleComment">Bình luận</v-btn>
                         </div>
                     </div>
                 </div>

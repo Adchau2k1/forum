@@ -30,27 +30,29 @@ const rePasswordRules = [
     (v) => v === userInfo.password || 'Nhập lại mật khẩu không khớp!',
 ]
 
-const onSubmit = () => {
+const onSubmit = async () => {
     if (!form.value) return
 
-    // createUser(userInfo)
-    //     .then((res) => {
-    //         console.log(res, 'resss')
-    //         if (res?.data?.success) {
-    //             messageOptions.show = true
-    //             messageOptions.type = 'success'
-    //             messageOptions.message = res?.data?.message
+    const { restAPI } = useApi()
+    const { data: res } = await restAPI.user.createUser({
+        body: userInfo,
+    })
 
-    //             setTimeout(() => navigateTo('/login'), 2000)
-    //         } else {
-    //             messageOptions.show = true
-    //             messageOptions.type = 'error'
-    //             messageOptions.message = res?.data?.message
-    //         }
-    //     })
-    //     .catch((err) => {
-    //         console.log('error:', err)
-    //     })
+    try {
+        if (res.value?.success) {
+            messageOptions.show = true
+            messageOptions.type = 'success'
+            messageOptions.message = res?.value?.message
+
+            setTimeout(() => navigateTo('/login'), 2000)
+        } else {
+            messageOptions.show = true
+            messageOptions.type = 'error'
+            messageOptions.message = res?.value?.message
+        }
+    } catch (err) {
+        console.log('error:', err)
+    }
 }
 
 useHead({

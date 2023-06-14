@@ -19,7 +19,7 @@ const onSubmit = async () => {
     if (!form.value) return
 
     const { restAPI } = useApi()
-    const { data: loginData } = await restAPI.user.login(userInfo)
+    const { data: loginData } = await restAPI.user.login({ body: userInfo })
     try {
         if (loginData.value.success) {
             const data = loginData?.value?.data
@@ -34,8 +34,7 @@ const onSubmit = async () => {
             messageOptions.show = true
             messageOptions.message = loginData.value.message
 
-            navigateTo('/')
-            // setTimeout(() => navigateTo('/'), 2000)
+            setTimeout(() => navigateTo('/'), 2000)
         } else {
             messageOptions.type = 'error'
             messageOptions.show = true
@@ -47,7 +46,7 @@ const onSubmit = async () => {
 }
 
 useHead({
-    title: 'Đăng nhập tài khoản',
+    title: 'Đăng nhập',
 })
 definePageMeta({
     layout: false,
