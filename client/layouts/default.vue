@@ -1,12 +1,10 @@
 <script setup>
 import Search from '~/components/Search.vue'
 
-const router = useRouter()
-const route = useRoute()
 const username = 'Admin'
 
 const handleLogout = () => {
-    router.push('/login')
+    navigateTo('/login')
 }
 
 useHead({

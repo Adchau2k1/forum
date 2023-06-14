@@ -1,12 +1,6 @@
 <script setup>
 import { useUserStore } from '~/stores/userStore'
-<<<<<<< HEAD
-import { LOGIN_ENDPOINT } from '~/constants/endpoints'
-=======
->>>>>>> 8e4b07d9a77db17309c47db15386e575ef39cfa6
 
-const { restAPI } = useApi()
-const userStore = useUserStore()
 const form = ref(null)
 const visiblePassword = ref(false)
 const messageOptions = reactive({
@@ -24,37 +18,31 @@ const rules = [(value) => !!value || 'Trường dữ liệu bắt buộc!']
 const onSubmit = async () => {
     if (!form.value) return
 
-<<<<<<< HEAD
-    const { data } = await useApi.post(
-        LOGIN_ENDPOINT,
-        {
-            body: userInfo,
-        },
-        true,
-    )
+    const { restAPI } = useApi()
+    const { data: loginData } = await restAPI.user.login(userInfo)
+    try {
+        if (loginData.value.success) {
+            const data = loginData?.value?.data
+            const userStore = useUserStore()
+            const accessToken = useCookie('accessToken')
 
-=======
-    const { data } = await restAPI.user.login({
-        body: userInfo,
-    })
->>>>>>> 8e4b07d9a77db17309c47db15386e575ef39cfa6
-    const loginData = data.value
+            userStore.setUserInfo(data)
+            accessToken.value = data?.accessToken
+            localStorage.setItem('userInfo', JSON.stringify(data))
 
-    if (loginData.success) {
-        const accessToken = useCookie('accessToken')
-        accessToken.value = loginData.data.token
-        userStore.isLogin = true
-        userStore.setUserInfo(loginData.data)
+            messageOptions.type = 'success'
+            messageOptions.show = true
+            messageOptions.message = loginData.value.message
 
-        messageOptions.type = 'success'
-        messageOptions.show = true
-        messageOptions.message = loginData.message
-
-        setTimeout(() => navigateTo('/'), 2000)
-    } else {
-        messageOptions.type = 'error'
-        messageOptions.show = true
-        messageOptions.message = loginData.message
+            navigateTo('/')
+            // setTimeout(() => navigateTo('/'), 2000)
+        } else {
+            messageOptions.type = 'error'
+            messageOptions.show = true
+            messageOptions.message = loginData.value.message
+        }
+    } catch (err) {
+        message.error('Error: ' + err)
     }
 }
 

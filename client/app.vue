@@ -1,12 +1,4 @@
-<script setup>
-// import { createApp } from 'vue'
-// import { createPinia } from 'pinia'
-
-// const pinia = createPinia()
-// const app = createApp()
-
-// app.use(pinia)
-</script>
+<script setup></script>
 
 <template>
     <NuxtLayout>

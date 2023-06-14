@@ -4,8 +4,7 @@ import { useJwt } from '@vueuse/integrations/useJwt'
 
 export default defineNuxtRouteMiddleware((to, from) => {
     // const pinia = createPinia()
-    const userStore = useUserStore()
-    console.log(userStore.userInfo)
+    // const userStore = useUserStore()
     // const path = to.path
     // if (path === 'login' || path === 'register') return abortNavigation()
     // else {

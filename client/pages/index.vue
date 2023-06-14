@@ -1,7 +1,6 @@
 <script setup>
 import Message from '~/components/Message.vue'
 import Post from '~/components/Post.vue'
-import { USERS_ENDPOINT } from '~/constants/endpoints'
 
 const showMessage = ref(false)
 const data = [
@@ -75,8 +74,8 @@ const forumStatistics = {
     aveVisit: 210,
 }
 
-const { data: t } = await useApi.get(USERS_ENDPOINT)
-console.log(t)
+// const { data: t } = await useApi.get(USERS_ENDPOINT)
+// console.log(t)
 </script>
 
 <template>

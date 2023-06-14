@@ -10,19 +10,18 @@ class Request {
         this.baseURL = useRuntimeConfig().public.baseURL || 'http://localhost:8000'
         this.accessToken = ''
 
-        if (process.server) {
+        if (process.client) {
             const userStore = useUserStore()
-            this.accessToken = `Bearer ${userStore.userInfo.token}`
+            this.accessToken = `Bearer ${userStore.userInfo.accessToken}`
         } else {
-            const token = useCookie('accessToken')
-            this.accessToken = `Bearer ${token.value}`
+            const accessToken = useCookie('accessToken')
+            this.accessToken = `Bearer ${accessToken?.value}`
         }
     }
 
     get(url, options) {
         return useFetch(url, {
             ...options,
-            method: 'GET',
             baseURL: this.baseURL,
             method: 'GET',
             headers: {
@@ -75,10 +74,11 @@ class UserManager {
     }
 
     async login(data) {
-        return this.request.post(API_ENDPOINTS.LOGIN, data)
+        return this.request.post(API_ENDPOINTS.LOGIN, {
+            body: data,
+        })
     }
 }
-
 class RestAPI {
     constructor() {
         this.request = new Request()
