@@ -5,19 +5,33 @@ const userStore = useUserStore()
 const { restAPI } = useApi()
 const route = useRoute()
 const { idPost } = route.params
+const messageOptions = reactive({
+    show: false,
+    type: 'success',
+    message: 'Cập nhật thành công',
+})
 const inputComment = ref('')
 const { data: resPost, refresh: refreshPost } = await restAPI.user.getPostById(idPost)
-const postData = ref(resPost.value?.data)
+const postData = computed(() => resPost.value?.data)
+const isLiked = computed(() => {
+    const liked =
+        postData.value.likedList.some((p) => p === userStore.userInfo._id) ||
+        postData.value.userPostId === userStore.userInfo._id
+
+    return liked
+})
+
+console.log(isLiked)
 
 // console.log(toRaw(postData.value))
 
 const isInvalid = ref(false)
 const errorMessage = ref('')
 
-// Kiểm tra quy tắc khi người dùng nhập liệu
+// Kiểm tra quy tắc khi người dùng nhập comment
 const validate = () => {
     if (inputComment.value) {
-        if (inputComment.value.length >= 9) {
+        if (inputComment.value.length > 9) {
             isInvalid.value = false
             errorMessage.value = ''
         } else {
@@ -34,27 +48,30 @@ const handleComment = async () => {
             comments: {
                 total: postData.value.comments.total + 1,
                 data: [
-                    ...postData.value?.comments?.data,
+                    ...postData.value.comments.data,
                     {
                         _id: postData.value.comments.total + 1,
                         imageUrl: userStore.userInfo.imageUrl,
+                        userCommentId: userStore.userInfo._id,
                         username: userStore.userInfo.username,
                         commentBy: userStore.userInfo.fullName,
                         content: inputComment.value,
-                        userPosts: userStore.userInfo.userPosts,
+                        totalPosts: userStore.userInfo.totalPosts,
                         totalLikes: userStore.userInfo.totalLikes,
+                        likedList: [],
                     },
                 ],
             },
         }
 
-        const { data } = await restAPI.user.updatePost({
-            body: newData,
-        })
         try {
+            const { data } = await restAPI.user.updatePost({
+                body: newData,
+            })
             if (data.value?.success) {
                 inputComment.value = ''
                 postData.value = newData
+                refreshPost()
             }
         } catch (err) {
             console.error(err)
@@ -62,12 +79,94 @@ const handleComment = async () => {
     }
 }
 
-const handleLike = (_id) => {}
+const handleLike = async (commentId) => {
+    // Cập nhật like người đăng
+    if (!commentId) {
+        try {
+            const posterData = {
+                _id: postData.value.userPostId,
+                totalLikes: postData.value.totalLikes + 1,
+            }
+            const { data: resPoster } = await restAPI.user.updateUser({
+                body: posterData,
+            })
+            if (!resPoster.value?.success) {
+                messageOptions.type = 'error'
+                messageOptions.show = true
+                messageOptions.message = resPoster.value?.message
+                return
+            }
+            userStore.setUserInfo({
+                ...userStore.userInfo,
+                totalLikes: posterData.totalLikes,
+            })
+
+            const { data } = await restAPI.user.updatePost({
+                body: {
+                    _id: postData.value._id,
+                    totalLikes: postData.value.totalLikes + 1,
+                    likedList: [...postData.value.likedList, userStore.userInfo._id],
+                },
+            })
+            if (data.value?.success) {
+                inputComment.value = ''
+                refreshPost()
+            }
+        } catch (err) {
+            console.error(err)
+        }
+    } else {
+        try {
+            const comment = postData.value.comments.data[Number.parseInt(commentId) - 1]
+            const commenterData = {
+                _id: comment.userCommentId,
+                totalLikes: comment.totalLikes + 1,
+            }
+            const { data: commenter } = await restAPI.user.updateUser({
+                body: commenterData,
+            })
+            if (!commenter.value?.success) {
+                messageOptions.type = 'error'
+                messageOptions.show = true
+                messageOptions.message = commenter.value?.message
+                return
+            }
+            const newComment = [...postData.value.comments.data]
+            newComment[Number.parseInt(commentId) - 1] = {
+                ...comment,
+                totalLikes: comment.totalLikes + 1,
+                likedList: [...comment.likedList, userStore.userInfo._id],
+                updatedAt: new Date(),
+            }
+            const { data } = await restAPI.user.updatePost({
+                body: {
+                    _id: postData.value._id,
+                    comments: {
+                        total: postData.value.comments.total,
+                        data: newComment,
+                    },
+                },
+            })
+            if (data.value?.success) {
+                inputComment.value = ''
+                refreshPost()
+            }
+        } catch (err) {
+            console.error(err)
+        }
+    }
+}
 </script>
 
 <template>
     <NuxtLayout
         ><div>
+            <Message
+                v-model="messageOptions.show"
+                :type="messageOptions.type"
+                :message="messageOptions.message"
+                @onClickClose="messageOptions.show = false"
+            />
             <h4 class="px-4 py-2 font-normal text-white bg-#213547">
                 Bài viết > <span class="font-semibold">{{ postData.topicTitle }}</span>
             </h4>
@@ -85,11 +184,11 @@ const handleLike = (_id) => {}
                             <div class="flex justify-center gap-3">
                                 <div class="text-center">
                                     <v-icon size="18">mdi-newspaper-variant</v-icon>
-                                    <div class="text-sm">{{ postData.userPosts }}</div>
+                                    <div class="text-sm">{{ postData.totalPosts || 0 }}</div>
                                 </div>
                                 <div class="text-center">
                                     <v-icon size="18">mdi-thumb-up</v-icon>
-                                    <div class="text-sm">{{ postData.userLikes }}</div>
+                                    <div class="text-sm">{{ postData.totalLikes }}</div>
                                 </div>
                             </div>
                         </div>
@@ -104,16 +203,12 @@ const handleLike = (_id) => {}
                             {{ postData.content }}
                         </div>
                         <div class="flex justify-end mt-1 min-h-10">
-                            <div class="flex items-center gap-2">
-                                <button>
-                                    <span><v-icon class="mr-1" size="20">mdi-reply-circle</v-icon></span>
-                                </button>
-                                <button>
-                                    <span class="flex items-center text-sm"
-                                        ><v-icon class="mr-1" size="20">mdi-thumb-up</v-icon>{{ postData.likes }}</span
-                                    >
-                                </button>
-                            </div>
+                            <v-btn class="!shadow-none" @click="() => handleLike()">
+                                <span class="flex items-center text-sm"
+                                    ><v-icon class="mr-1" size="20">mdi-thumb-up</v-icon
+                                    >{{ postData.likedList?.length }}</span
+                                >
+                            </v-btn>
                         </div>
                     </div>
                 </div>
@@ -131,11 +226,11 @@ const handleLike = (_id) => {}
                                 <div class="flex justify-center gap-3">
                                     <div class="text-center">
                                         <v-icon size="18">mdi-newspaper-variant</v-icon>
-                                        <div class="text-sm">{{ c.userPosts?.toString() }}</div>
+                                        <div class="text-sm">{{ c.totalPosts }}</div>
                                     </div>
                                     <div class="text-center">
                                         <v-icon size="18">mdi-thumb-up</v-icon>
-                                        <div class="text-sm">{{ c.totalLikes?.toString() }}</div>
+                                        <div class="text-sm">{{ c.totalLikes }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -150,16 +245,12 @@ const handleLike = (_id) => {}
                                 {{ c.content }}
                             </div>
                             <div class="flex justify-end mt-1 min-h-10">
-                                <div class="flex items-center gap-2">
-                                    <button>
-                                        <span><v-icon class="mr-1" size="20">mdi-reply-circle</v-icon></span>
-                                    </button>
-                                    <button>
-                                        <span class="flex items-center text-sm"
-                                            ><v-icon class="mr-1" size="20">mdi-thumb-up</v-icon>{{ c.likes }}</span
-                                        >
-                                    </button>
-                                </div>
+                                <v-btn class="!shadow-none" @click="() => handleLike(c._id)">
+                                    <span class="flex items-center text-sm"
+                                        ><v-icon class="mr-1" size="20">mdi-thumb-up</v-icon
+                                        >{{ c.likedList?.length || 0 }}</span
+                                    >
+                                </v-btn>
                             </div>
                         </div>
                     </div>

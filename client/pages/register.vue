@@ -31,28 +31,30 @@ const rePasswordRules = [
 ]
 
 const onSubmit = async () => {
-    if (!form.value) return
+    form.value.validate().then(async (res) => {
+        if (res.valid) {
+            const { restAPI } = useApi()
+            const { data: res } = await restAPI.user.createUser({
+                body: userInfo,
+            })
 
-    const { restAPI } = useApi()
-    const { data: res } = await restAPI.user.createUser({
-        body: userInfo,
-    })
+            try {
+                if (res.value?.success) {
+                    messageOptions.show = true
+                    messageOptions.type = 'success'
+                    messageOptions.message = res?.value?.message
 
-    try {
-        if (res.value?.success) {
-            messageOptions.show = true
-            messageOptions.type = 'success'
-            messageOptions.message = res?.value?.message
-
-            setTimeout(() => navigateTo('/login'), 2000)
-        } else {
-            messageOptions.show = true
-            messageOptions.type = 'error'
-            messageOptions.message = res?.value?.message
+                    setTimeout(() => navigateTo('/login'), 2000)
+                } else {
+                    messageOptions.show = true
+                    messageOptions.type = 'error'
+                    messageOptions.message = res?.value?.message
+                }
+            } catch (err) {
+                console.log('error:', err)
+            }
         }
-    } catch (err) {
-        console.log('error:', err)
-    }
+    })
 }
 
 useHead({
@@ -73,10 +75,10 @@ definePageMeta({
         />
 
         <div class="flex items-center justify-center w-70% 2xl:w-50% min-h-70% p-8 rounded-md shadow-xl bg-white">
-            <div class="w-1/2 mr-10">
-                <NuxtLink to="/"><NuxtImg src="/img/logo-forum.png" width="400" height="400" /></NuxtLink>
+            <div class="w-1/2 mr-10 text-center">
+                <NuxtLink to="/"><NuxtImg src="/img/logo-forum.png" width="300" height="300" /></NuxtLink>
             </div>
-            <v-form v-model="form" @submit.prevent="onSubmit" class="w-1/2">
+            <v-form ref="form" @submit.prevent="onSubmit" class="w-1/2">
                 <v-container>
                     <v-row
                         ><v-col cols="12"><h2 class="text-center font-600">Đăng ký tài khoản</h2></v-col></v-row

@@ -6,19 +6,22 @@ const props = defineProps({
     timeout: Number,
 })
 
-const icon = ref('mdi-check-circle')
-// let icon = 'mdi-check-circle'
-switch (props.type) {
-    case 'info':
-        icon.value = 'mdi-information-variant-circle'
-        break
-    case 'warning':
-        icon.value = 'mdi-alert-octagon'
-        break
-    case 'error':
-        icon.value = 'mdi-alert'
-        break
-}
+const icon = computed(() => {
+    let result = 'mdi-check-circle'
+    switch (props.type) {
+        case 'info':
+            result = 'mdi-information-variant-circle'
+            break
+        case 'warning':
+            result = 'mdi-alert-octagon'
+            break
+        case 'error':
+            result = 'mdi-alert'
+            break
+    }
+
+    return result
+})
 
 const emit = defineEmits(['onClickClose'])
 </script>

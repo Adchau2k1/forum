@@ -3,11 +3,14 @@ import { useUserStore } from '~/stores/userStore'
 const API_ENDPOINTS = {
     LOGIN: '/users/login',
     REGISTER: '/users/register',
+    USER: '/users',
+    USER_POSTS: '/posts/userPosts',
     SEARCH_RESULTS: '/home/search',
     SHOW_POSTS: '/home/showPosts',
     TOP_POSTS: '/home/topPosts',
     FORM_STATISTICS: '/home/forumStatistics',
     POST: '/posts',
+    TOPIC: '/topics',
 }
 
 class Request {
@@ -78,15 +81,24 @@ class UserManager {
         this.request = request
     }
 
+    // User
     async login(data) {
         return this.request.post(API_ENDPOINTS.LOGIN, data)
+    }
+
+    async getUserByUsername(data) {
+        return this.request.get(`${API_ENDPOINTS.USER}/${data.username}`)
     }
 
     async createUser(data) {
         return this.request.post(API_ENDPOINTS.REGISTER, data)
     }
 
-    // index
+    async updateUser(data) {
+        return this.request.put(API_ENDPOINTS.USER, data)
+    }
+
+    // Index
     async getSearchResults(data) {
         return this.request.get(API_ENDPOINTS.SEARCH_RESULTS, data)
     }
@@ -103,13 +115,30 @@ class UserManager {
         return this.request.get(API_ENDPOINTS.FORM_STATISTICS, data)
     }
 
-    // post
+    // Post
     async getPostById(_id) {
         return this.request.get(`${API_ENDPOINTS.POST}/${_id}`)
     }
 
+    async createPost(data) {
+        return this.request.post(API_ENDPOINTS.POST, data)
+    }
+
     async updatePost(data) {
         return this.request.put(API_ENDPOINTS.POST, data)
+    }
+
+    async getPostAllByFullName(data) {
+        return this.request.get(`${API_ENDPOINTS.USER_POSTS}/${data.postBy}`)
+    }
+
+    // Topic
+    async getTopics(data) {
+        return this.request.get(API_ENDPOINTS.TOPIC, data)
+    }
+
+    async updateTopic(data) {
+        return this.request.put(API_ENDPOINTS.TOPIC, data)
     }
 }
 class RestAPI {

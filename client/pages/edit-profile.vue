@@ -1,17 +1,28 @@
 <script setup>
 import Message from '~/components/Message.vue'
+import { useUserStore } from '~/stores/userStore'
 
+const { restAPI } = useApi()
 const route = useRoute()
+const username = route.query.username
+const messageOptions = reactive({
+    show: false,
+    type: 'success',
+    message: 'Cập nhật thành công',
+})
 const form = ref(null)
 const file = ref(null)
-const avatar = ref('/img/avatar.png')
-const email = ref('email@example.com')
-const fullName = ref('')
-const phone = ref('')
-const showMessage = ref(false)
-
-let oldUrl = ''
-const username = route.query.username
+const { data: resUserInfo, refresh } = await restAPI.user.getUserByUsername({
+    username: username,
+})
+const oldUrl = ref('')
+const profile = reactive({
+    _id: resUserInfo.value?.data?._id,
+    imageUrl: resUserInfo.value?.data?.imageUrl || '/img/avatar.png',
+    email: resUserInfo.value?.data?.email,
+    fullName: resUserInfo.value?.data?.fullName,
+    phone: resUserInfo.value?.data?.phone,
+})
 
 const fullNameRules = [
     (v) => !!v || 'Trường dữ liệu bắt buộc!',
@@ -27,20 +38,41 @@ const phoneRules = [
 const handleChangeImage = () => {
     if (file.value[0]) {
         // Xóa ảnh cũ khỏi bộ nhớ
-        if (oldUrl) URL.revokeObjectURL(oldUrl)
+        if (oldUrl.value) URL.revokeObjectURL(oldUrl.value)
 
         const value = file.value[0]
-        avatar.value = URL.createObjectURL(value)
-        oldUrl = avatar.value
+        profile.imageUrl = URL.createObjectURL(value)
+        oldUrl.value = profile.imageUrl
     }
 }
 
-const onSubmit = () => {
-    if (!form.value) return
-
-    showMessage.value = true
-
-    setTimeout(() => (loading.value = false), 2000)
+const onSubmit = async () => {
+    form.value.validate().then(async (res) => {
+        if (res.valid) {
+            try {
+                const userStore = useUserStore()
+                const { data: resUpdate } = await restAPI.user.updateUser({
+                    body: profile,
+                })
+                if (resUpdate.value?.success == true) {
+                    userStore.userInfo = {
+                        ...userStore.userInfo,
+                        ...profile,
+                    }
+                    messageOptions.type = 'success'
+                    messageOptions.show = true
+                    messageOptions.message = resUpdate.value?.message
+                    refresh()
+                } else {
+                    messageOptions.type = 'error'
+                    messageOptions.show = true
+                    messageOptions.message = resUpdate.value?.message
+                }
+            } catch (err) {
+                console.error(err)
+            }
+        }
+    })
 }
 const onCancel = () => window.history.back()
 
@@ -56,16 +88,17 @@ definePageMeta({
     <NuxtLayout
         ><div class="max-w-900px m-5 lg:mx-auto p-4 border rounded-md">
             <Message
-                v-model="showMessage"
-                message="Chỉnh sửa thành công thành công"
-                @onClickClose="showMessage = false"
+                v-model="messageOptions.show"
+                :type="messageOptions.type"
+                :message="messageOptions.message"
+                @onClickClose="messageOptions.show = false"
             />
 
             <h2 class="uppercase">Thông tin cá nhân</h2>
             <span>Chỉnh sửa thông tin cá nhân</span>
             <div class="mt-8">
                 <div class="relative mx-auto w-fit">
-                    <NuxtImg :src="avatar" alt="avatar" class="w-24 h-24 rounded-full object-cover" />
+                    <NuxtImg :src="profile.imageUrl" alt="avatar" class="w-24 h-24 rounded-full object-cover" />
                     <label
                         for="inputAvatar"
                         class="absolute right-1 bottom-10px w-26px h-26px flex items-center justify-center bg-black opacity-70 rounded-full cursor-pointer"
@@ -82,7 +115,7 @@ definePageMeta({
                 </div>
 
                 <div class="mt-8">
-                    <v-form v-model="form" @submit.prevent="onSubmit">
+                    <v-form ref="form" @submit.prevent="onSubmit">
                         <v-row>
                             <v-col cols="12">
                                 <v-text-field
@@ -98,7 +131,7 @@ definePageMeta({
                             <v-col cols="12" class="-mt-4">
                                 <v-text-field
                                     readonly
-                                    v-model="email"
+                                    v-model="profile.email"
                                     label="Nhập tài khoản"
                                     variant="solo"
                                     bg-color="rgba(22,24,35,.06)"
@@ -108,7 +141,7 @@ definePageMeta({
                         <v-row>
                             <v-col cols="12" class="-mt-4">
                                 <v-text-field
-                                    v-model="fullName"
+                                    v-model="profile.fullName"
                                     :rules="fullNameRules"
                                     label="Nhập tên hiển thị"
                                     variant="solo"
@@ -119,7 +152,7 @@ definePageMeta({
                         <v-row>
                             <v-col cols="12" class="-mt-4">
                                 <v-text-field
-                                    v-model="phone"
+                                    v-model="profile.phone"
                                     :rules="phoneRules"
                                     label="Nhập số điện thoại"
                                     variant="solo"

@@ -15,34 +15,32 @@ const userInfo = reactive({
 
 const rules = [(value) => !!value || 'Trường dữ liệu bắt buộc!']
 
-const onSubmit = async () => {
-    if (!form.value) return
+const onSubmit = () => {
+    form.value.validate().then(async (res) => {
+        if (res.valid) {
+            try {
+                const { restAPI } = useApi()
+                const { data: loginData } = await restAPI.user.login({ body: userInfo })
+                if (loginData.value.success) {
+                    const data = loginData?.value?.data
+                    const userStore = useUserStore()
+                    userStore.setUserInfo(data)
 
-    const { restAPI } = useApi()
-    const { data: loginData } = await restAPI.user.login({ body: userInfo })
-    try {
-        if (loginData.value.success) {
-            const data = loginData?.value?.data
-            const userStore = useUserStore()
-            const accessToken = useCookie('accessToken')
+                    messageOptions.type = 'success'
+                    messageOptions.show = true
+                    messageOptions.message = loginData.value.message
 
-            userStore.setUserInfo(data)
-            accessToken.value = data?.accessToken
-            localStorage.setItem('userInfo', JSON.stringify(data))
-
-            messageOptions.type = 'success'
-            messageOptions.show = true
-            messageOptions.message = loginData.value.message
-
-            setTimeout(() => navigateTo('/'), 2000)
-        } else {
-            messageOptions.type = 'error'
-            messageOptions.show = true
-            messageOptions.message = loginData.value.message
+                    setTimeout(() => navigateTo('/'), 2000)
+                } else {
+                    messageOptions.type = 'error'
+                    messageOptions.show = true
+                    messageOptions.message = loginData.value.message
+                }
+            } catch (err) {
+                console.error(err)
+            }
         }
-    } catch (err) {
-        message.error('Error: ' + err)
-    }
+    })
 }
 
 useHead({
@@ -63,10 +61,10 @@ definePageMeta({
         />
 
         <div class="flex items-center justify-center w-70% 2xl:w-50% min-h-70% p-8 rounded-md shadow-xl bg-white">
-            <div class="w-1/2 mr-10">
-                <NuxtLink to="/"><NuxtImg src="/img/logo-forum.png" width="400" height="400" /></NuxtLink>
+            <div class="w-1/2 mr-10 text-center">
+                <NuxtLink to="/"><NuxtImg src="/img/logo-forum.png" width="300" height="300" /></NuxtLink>
             </div>
-            <v-form v-model="form" @submit.prevent="onSubmit" class="w-1/2">
+            <v-form ref="form" @submit.prevent="onSubmit" class="w-1/2">
                 <v-container>
                     <v-row
                         ><v-col cols="12"><h2 class="text-center font-600">Đăng nhập vào diễn đàn</h2></v-col></v-row

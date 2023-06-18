@@ -4,76 +4,6 @@ import Post from '~/components/Post.vue'
 
 const { restAPI } = useApi()
 const showMessage = ref(false)
-// const data = [
-//     {
-//         id: 1,
-//         imgUrl: '',
-//         postBy: 'Văn Dev',
-//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng là chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python.',
-//         topic: 'Chuyên mục',
-//         postAt: '21/05/2023',
-//         views: 500,
-//         likes: 220,
-//         comments: 45,
-//     },
-//     {
-//         id: 2,
-//         imgUrl: '',
-//         postBy: 'Văn Dev',
-//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
-//         topic: 'Chuyên mục',
-//         postAt: '21/05/2023',
-//         views: 500,
-//         likes: 220,
-//         comments: 45,
-//     },
-//     {
-//         id: 3,
-//         imgUrl: '',
-//         postBy: 'Văn Dev',
-//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
-//         topic: 'Chuyên mục',
-//         postAt: '21/05/2023',
-//         views: 500,
-//         likes: 220,
-//         comments: 45,
-//     },
-//     {
-//         id: 4,
-//         imgUrl: '',
-//         postBy: 'Văn Dev',
-//         title: 'Cảm thấy khó khăn khi chuyển sang học một ngôn ngữ mới ting',
-//         desc: 'Tôi làm chuyên môn về phân tích dữ liệu, chủ yếu là dùng phần mềm chuyên môn sâu và dùng rất nhiều SQL db, python. Hai món đó cũng...',
-//         topic: 'Chuyên mục',
-//         postAt: '21/05/2023',
-//         views: 500,
-//         likes: 220,
-//         comments: 45,
-//     },
-// ]
-const postTop = [
-    {
-        id: 1,
-        url: '#',
-        title: 'Các bạn nghĩ sao về VueJS?',
-        postBy: 'Văn Dũi',
-    },
-    {
-        id: 2,
-        url: '#',
-        title: 'Lương của sinh viên mới ra trường',
-        postBy: 'Dev Alo',
-    },
-]
-const forumStatistics = {
-    topics: 1376,
-    posts: 22461,
-    members: 3156,
-    aveVisit: 210,
-}
 
 const { data: resPosts } = await restAPI.user.getShowPosts({})
 const dataShowPosts = ref(resPosts.value)
@@ -117,7 +47,7 @@ const dataStatistics = ref(resStatistics.value)
                         <h3 class="text-blue-700">Thống kê diễn đàn</h3>
                         <div class="mt-4 font-300">
                             <p class="flex justify-between">
-                                <span class="opacity-95">Chủ đề:</span
+                                <span class="opacity-95">Chuyên mục:</span
                                 ><span class="font-500">{{ dataStatistics?.data?.topics }}</span>
                             </p>
                             <p class="flex justify-between">

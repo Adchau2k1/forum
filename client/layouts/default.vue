@@ -1,9 +1,11 @@
 <script setup>
 import Search from '~/components/Search.vue'
+import { useUserStore } from '~/stores/userStore'
 
-const username = 'Admin'
+const userStore = useUserStore()
 
 const handleLogout = () => {
+    userStore.logOut()
     navigateTo('/login')
 }
 
@@ -26,7 +28,7 @@ useHead({
             class="z-10 fixed inset-0 grid grid-cols-3 justify-center items-center h-[66px] px-5 bg-white shadow-none border-b border-b-solid border-b-[#e8ebed]"
         >
             <div class="flex items-center">
-                <NuxtImg src="/img/logo-forum.png" alt="My Image" height="50" width="50" />
+                <NuxtImg src="/img/logo-forum.png" alt="My Image" height="40" width="40" />
                 <span class="ml-2 text-lg font-medium">Diễn đàn sinh viên</span>
             </div>
 
@@ -46,7 +48,12 @@ useHead({
                         <template v-slot:activator="{ props }">
                             <button v-bind="props" class="">
                                 <template v-if="false">
-                                    <NuxtImg src="/img/avatar.png" alt="My Image" height="32" width="32" />
+                                    <NuxtImg
+                                        :src="userStore.userInfo?.imageUrl || '/img/avatar.png'"
+                                        alt="My Image"
+                                        height="32"
+                                        width="32"
+                                    />
                                 </template>
                                 <template v-if="true">
                                     <v-icon size="36">mdi-account-circle-outline</v-icon>
@@ -55,9 +62,16 @@ useHead({
                         </template>
 
                         <v-list class="menu mt-2 relative min-w-200px">
+                            <v-list-item v-if="userStore.userInfo.role === 'admin'">
+                                <NuxtLink
+                                    to="/admin"
+                                    class="block w-full p-2 bg-transparent hover:!bg-gray-100 no-underline text-black"
+                                    ><v-icon class="mr-1">mdi-shield-account</v-icon> Trang quản trị</NuxtLink
+                                >
+                            </v-list-item>
                             <v-list-item>
                                 <NuxtLink
-                                    :to="`/@${username}`"
+                                    :to="`/@${userStore.userInfo?.username}`"
                                     class="block w-full p-2 bg-transparent hover:!bg-gray-100 no-underline text-black"
                                     ><v-icon class="mr-1">mdi-account-eye</v-icon> Xem hồ sơ</NuxtLink
                                 >
@@ -79,7 +93,7 @@ useHead({
             <div class="z-10 fixed left-5 top-82px h-[calc(100vh-100px)] py-4 rounded-md shadow-pretty bg-white">
                 <div class="flex flex-col items-center gap-4 p-1">
                     <NuxtLink
-                        to="/topic/newPost"
+                        to="/topic/new-post"
                         class="w-12 h-12 flex items-center justify-center no-underline outline-none rounded-full !bg-[rgb(255,133,98)]"
                     >
                         <v-icon class="!text-white">mdi-plus</v-icon>

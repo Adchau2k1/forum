@@ -1,27 +1,26 @@
 <script setup>
 const props = defineProps({
     _id: String,
-    imgUrl: String,
+    imageUrl: String,
     postBy: String,
     title: String,
     content: String,
     topicTitle: String,
-    userPosts: Number,
-    userLikes: Number,
-    totalLikes: Number,
+    likedList: Array,
     comments: Object,
     createdAt: String,
 })
 
-const timeRead = Math.floor(Math.random() * 6 + 1) + ' phút đọc'
+// const timeRead = Math.floor(Math.random() * 6 + 1) + ' phút đọc'
+const timeRead = 3 + ' phút đọc'
 </script>
 
 <template>
     <div class="border-2 border-solid border-#e8e8e8 rounded-lg p-4">
         <div class="w-full flex items-center justify-between">
             <div class="flex items-center">
-                <NuxtImg :src="props.imgUrl || '/img/logo-forum.png'" width="40" height="40" />
-                <span class="font-medium">{{ props.postBy }}</span>
+                <NuxtImg :src="props.imageUrl || '/img/logo-forum.png'" width="36" height="36" />
+                <span class="ml-2 font-medium">{{ props.postBy }}</span>
             </div>
             <button class="-mr-13px p-1"><v-icon>mdi-dots-vertical</v-icon></button>
         </div>
@@ -40,8 +39,7 @@ const timeRead = Math.floor(Math.random() * 6 + 1) + ' phút đọc'
                 ><span>{{ timeRead }}</span>
             </div>
             <div class="flex items-center gap-4">
-                <span><v-icon class="mr-1">mdi-eye</v-icon>{{ props.userPosts }}</span>
-                <span><v-icon class="mr-1">mdi-thumb-up</v-icon>{{ props.userLikes }}</span>
+                <span><v-icon class="mr-1">mdi-thumb-up</v-icon>{{ props.likedList?.length || 0 }}</span>
                 <span><v-icon class="mr-1">mdi-comment</v-icon>{{ comments?.total }}</span>
             </div>
         </div>
