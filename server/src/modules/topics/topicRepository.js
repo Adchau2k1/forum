@@ -32,15 +32,39 @@ class TopicRepository {
         }
     }
 
-    async createTopic({ corner, title, desc, totalTopics, postShowId }) {
+    async createTopic({ corner, title, desc }) {
         try {
             const newTopic = await Topic.create({
                 corner,
                 title,
                 desc,
-                totalTopics,
-                postShowId,
             })
+
+            return newTopic
+        } catch (err) {
+            return { error: err.message }
+        }
+    }
+
+    async updateTopic({ _id, corner, title, desc, totalPosts, postShow }) {
+        try {
+            const existingTopic = await Topic.findById(_id)
+            if (!existingTopic) {
+                return { error: 'Chuyên mục không tồn tại!' }
+            }
+
+            const updatedAt = new Date()
+            const newTopic = await Topic.updateOne(
+                { _id },
+                {
+                    corner,
+                    title,
+                    desc,
+                    totalPosts,
+                    postShow,
+                    updatedAt,
+                }
+            )
 
             return newTopic
         } catch (err) {

@@ -44,7 +44,7 @@ export default class SiteController {
 
                 res.json(
                     successResponse({
-                        data: newPosts,
+                        data: newPosts.reverse(),
                     })
                 )
             }
@@ -86,7 +86,7 @@ export default class SiteController {
 
                 res.json(
                     successResponse({
-                        data: newPosts,
+                        data: newPosts.reverse(),
                     })
                 )
             }

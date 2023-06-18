@@ -32,7 +32,7 @@ export default class TopicController {
     }
 
     // [POST] /topics
-    async createPost(req, res) {
+    async createTopic(req, res) {
         try {
             const result = await topicRepository.createTopic(req.body)
 
@@ -45,6 +45,28 @@ export default class TopicController {
                         data: {
                             _id: result._id,
                             title: result.title,
+                        },
+                    })
+                )
+            }
+        } catch (err) {
+            res.status(400).json({ error: err.message })
+        }
+    }
+
+    // [PUT] /topics
+    async updateTopic(req, res) {
+        try {
+            const result = await topicRepository.updateTopic(req.body)
+
+            if (result.error) {
+                res.json(errorResponse({ message: result.error }))
+            } else {
+                res.status(201).json(
+                    successResponse({
+                        message: 'Cập nhật chuyên mục thành công',
+                        data: {
+                            _id: req.body._id,
                         },
                     })
                 )

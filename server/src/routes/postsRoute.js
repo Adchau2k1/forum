@@ -8,7 +8,7 @@ route.get('/', postController.getPostAll)
 
 route.get('/:_id', postController.getPostById)
 
-route.get('/userPosts/:userPostId', postController.getPostAllByUserId)
+route.get('/userPosts/:postBy', postController.getPostAllByUsernamePost)
 
 route.post('/', postController.createPost)
 

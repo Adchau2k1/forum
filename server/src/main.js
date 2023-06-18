@@ -4,7 +4,7 @@ import { config } from 'dotenv'
 import cors from 'cors'
 import route from './routes/index.js'
 import { configServices } from './config.js'
-import connect from './database/index.js'
+import connect from './database/connect.js'
 import checkToken from './authentication/auth.js'
 
 async function main() {

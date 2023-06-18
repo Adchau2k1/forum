@@ -6,7 +6,7 @@ const userController = new UserController()
 
 route.get('/', userController.getUserAll)
 
-route.get('/:_id', userController.getUserById)
+route.get('/:username', userController.getUserByUsername)
 
 route.post('/login', userController.loginUser)
 

@@ -6,6 +6,8 @@ const topicController = new TopicController()
 
 route.get('/', topicController.getTopicAll)
 
-route.post('/', topicController.createPost)
+route.post('/', topicController.createTopic)
+
+route.put('/', topicController.updateTopic)
 
 export default route

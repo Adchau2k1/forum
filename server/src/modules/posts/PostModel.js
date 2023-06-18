@@ -2,14 +2,16 @@ import { Schema, model } from 'mongoose'
 
 const Post = new Schema({
     topicId: { type: Schema.Types.ObjectId, required: true },
+    imageUrl: { type: String, default: '' },
+    userPostId: { type: Schema.Types.ObjectId, required: true },
     usernamePost: { type: String, required: true },
     postBy: { type: String, required: true },
     title: { type: String, required: true },
     content: { type: String, required: true },
     topicTitle: { type: String, required: true },
-    userPosts: { type: Number, default: 0 },
-    userLikes: { type: Number, default: 0 },
-    totalLikes: { type: Number, default: 0 },
+    totalPosts: { type: Number, require: 0 },
+    totalLikes: { type: Number, require: 0 },
+    likedList: { type: Array, default: [] },
     comments: {
         total: { type: Number, default: 0 },
         data: {
@@ -18,18 +20,20 @@ const Post = new Schema({
                     _id: { type: String, required: true },
                     imageUrl: { type: String, default: '' },
                     username: { type: String, require: true },
+                    userCommentId: { type: Schema.Types.ObjectId, required: true },
                     commentBy: { type: String, require: true },
                     content: { type: String, require: true },
-                    userPosts: { type: Number, default: 0 },
-                    totalLikes: { type: Number, default: 0 },
-                    createdAt: { type: Date, default: new Date() },
-                    updatedAt: { type: Date, default: new Date() },
+                    totalPosts: { type: Number, default: 0 },
+                    totalLikes: { type: Number, require: 0 },
+                    likedList: { type: Array, default: [] },
+                    createdAt: { type: Date, default: Date.now },
+                    updatedAt: { type: Date, default: Date.now },
                 },
             ],
         },
     },
-    createdAt: { type: Date, default: new Date() },
-    updatedAt: { type: Date, default: new Date() },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
 })
 
 export default model('Post', Post)

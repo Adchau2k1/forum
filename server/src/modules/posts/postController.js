@@ -27,7 +27,7 @@ export default class PostController {
                             page: parseInt(page),
                             pageSize: parseInt(pageSize),
                             total: result.total,
-                            data: newPosts,
+                            data: newPosts.reverse(),
                         },
                     })
                 )
@@ -57,13 +57,13 @@ export default class PostController {
         }
     }
 
-    // [GET] /posts/userPosts/:userPostId
-    async getPostAllByUserId(req, res) {
+    // [GET] /posts/userPosts/:postBy
+    async getPostAllByUsernamePost(req, res) {
         try {
             const { page = 1, pageSize = DEFAULT_PAGE_SIZE, isAll } = req.query
-            const userPostId = new mongoose.Types.ObjectId(req.params.userPostId)
-            const result = await postRepository.getPostAllByUserId({
-                userPostId,
+            const postBy = req.params.postBy
+            const result = await postRepository.getPostAllByUsernamePost({
+                postBy,
                 page,
                 pageSize,
                 isAll,
@@ -83,7 +83,7 @@ export default class PostController {
                             page: parseInt(page),
                             pageSize: parseInt(pageSize),
                             total: result.total,
-                            data: newPosts,
+                            data: newPosts.reverse(),
                         },
                     })
                 )

@@ -47,11 +47,11 @@ class PostRepository {
         }
     }
 
-    async getPostAllByUserId({ userPostId, page, pageSize, isAll }) {
+    async getPostAllByUsernamePost({ postBy, page, pageSize, isAll }) {
         try {
             const postAll = await Post.aggregate([
                 {
-                    $match: { userPostId },
+                    $match: { postBy },
                 },
             ])
             page = parseInt(page)
@@ -61,7 +61,7 @@ class PostRepository {
             if (!isAll) {
                 filteredUserPosts = await Post.aggregate([
                     {
-                        $match: { userPostId },
+                        $match: { postBy },
                     },
                     {
                         $skip: (page - 1) * pageSize,
@@ -81,16 +81,28 @@ class PostRepository {
         }
     }
 
-    async createPost({ topicId, userPostId, postBy, title, content, userPosts, userLikes }) {
+    async createPost({
+        topicId,
+        topicTitle,
+        userPostId,
+        usernamePost,
+        postBy,
+        title,
+        content,
+        totalPosts,
+        totalLikes,
+    }) {
         try {
             const newPost = await Post.create({
                 topicId,
+                topicTitle,
                 userPostId,
+                usernamePost,
                 postBy,
                 title,
                 content,
-                userPosts,
-                userLikes,
+                totalPosts,
+                totalLikes,
             })
 
             return newPost
@@ -99,9 +111,9 @@ class PostRepository {
         }
     }
 
-    async updatePost({ _id, title, content, userPosts, userLikes, comments }) {
+    async updatePost({ _id, title, content, totalPosts, totalLikes, likedList, comments }) {
         try {
-            const existingPost = await Post.findById({ _id })
+            const existingPost = await Post.findById(_id)
             if (!existingPost) {
                 return { error: 'Bài viết không tồn tại!' }
             }
@@ -112,8 +124,9 @@ class PostRepository {
                 {
                     title,
                     content,
-                    userPosts,
-                    userLikes,
+                    totalPosts,
+                    totalLikes,
+                    likedList,
                     comments,
                     updatedAt,
                 }

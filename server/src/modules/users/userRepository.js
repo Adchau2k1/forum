@@ -33,14 +33,14 @@ class UserRepository {
         }
     }
 
-    async getUserById(_id) {
+    async getUserByUsername(username) {
         try {
-            const existingUser = await User.findById(_id)
+            const existingUser = await User.findOne({ username })
             if (existingUser) {
                 return existingUser
             }
 
-            return { error: 'Không tìm thấy user!' }
+            return { error: 'Không tìm thấy người dùng!' }
         } catch (err) {
             return { error: err.message }
         }
@@ -99,12 +99,12 @@ class UserRepository {
         email,
         password,
         checked,
+        role,
         fullName,
         phone,
         image_url,
-        userPosts,
-        userLikes,
         totalLikes,
+        totalPosts,
     }) {
         try {
             const existingUser = await User.findById(_id)
@@ -125,13 +125,13 @@ class UserRepository {
                 {
                     email,
                     password: passwordHashed,
+                    role,
                     checked,
                     fullName,
                     phone,
                     image_url,
-                    userPosts,
-                    userLikes,
                     totalLikes,
+                    totalPosts,
                     updatedAt,
                 }
             )

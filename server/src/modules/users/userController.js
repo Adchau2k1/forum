@@ -37,10 +37,10 @@ export default class UserController {
         }
     }
 
-    // [GET] /users/:_id
-    async getUserById(req, res) {
+    // [GET] /users/:username
+    async getUserByUsername(req, res) {
         try {
-            const result = await userRepository.getUserById(req.params._id)
+            const result = await userRepository.getUserByUsername(req.params.username)
 
             if (result.error) {
                 res.json(errorResponse({ message: result.error }))
