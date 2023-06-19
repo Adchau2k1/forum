@@ -26,7 +26,7 @@ const selectedValues = reactive({
 })
 const { data: resPosts, refresh: refreshDataPost } = await restAPI.user.getPosts({ params: { isAll: true } })
 const dataPosts = computed(() => {
-    const newData = resPosts.value?.data?.data.map((post, idx) => ({
+    const newData = resPosts.value?.data?.data?.map((post, idx) => ({
         ...post,
         index: idx + 1,
         createdAt: formatNormal(post.createdAt),
@@ -65,12 +65,12 @@ const headers = [
         key: 'createdAt',
         sortable: false,
     },
-    {
-        title: 'Thao tác',
-        align: 'center',
-        key: 'actions',
-        sortable: false,
-    },
+    // {
+    //     title: 'Thao tác',
+    //     align: 'center',
+    //     key: 'actions',
+    //     sortable: false,
+    // },
 ]
 
 const roles = [
@@ -275,7 +275,7 @@ definePageMeta({
                 </template>
 
                 <template v-slot:item.actions="{ item }">
-                    <!-- <v-icon size="small" class="me-2" @click="handleEdit(item.raw)"> mdi-pencil </v-icon> -->
+                    <v-icon size="small" class="me-2" @click="handleEdit(item.raw)"> mdi-pencil </v-icon>
                     <v-icon size="small" @click="handleClickDelete(item.raw)"> mdi-delete </v-icon>
                 </template>
             </VDataTable>

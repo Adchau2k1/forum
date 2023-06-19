@@ -13,15 +13,6 @@ const messageOptions = reactive({
 const inputComment = ref('')
 const { data: resPost, refresh: refreshPost } = await restAPI.user.getPostById(idPost)
 const postData = computed(() => resPost.value?.data)
-const isLiked = computed(() => {
-    const liked =
-        postData.value.likedList.some((p) => p === userStore.userInfo._id) ||
-        postData.value.userPostId === userStore.userInfo._id
-
-    return liked
-})
-
-console.log(isLiked)
 
 // console.log(toRaw(postData.value))
 
@@ -199,7 +190,7 @@ const handleLike = async (commentId) => {
                             <div>{{ formatNormal(postData.createdAt) }}</div>
                         </div>
                         <v-divider class="mt-1 mb-3"></v-divider>
-                        <div class="">
+                        <div class="whitespace-pre-wrap">
                             {{ postData.content }}
                         </div>
                         <div class="flex justify-end mt-1 min-h-10">

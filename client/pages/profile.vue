@@ -25,12 +25,17 @@ const postData = ref(resPost.value.data.data)
                 <div class="flex items-center gap-4">
                     <NuxtImg :src="viewUserInfo?.imageUrl || '/img/avatar.png'" alt="avatar" class="w-14 h-14" />
                     <div>
-                        <h4 class="">{{ viewUserInfo?.fullName }}</h4>
+                        <h4 class="font-medium">
+                            {{ viewUserInfo?.fullName }}
+                            <span v-if="viewUserInfo?.checked"
+                                ><v-icon class="text-[rgb(255,133,98)]" size="18">mdi-check-circle</v-icon></span
+                            >
+                        </h4>
                         <span>@{{ viewUserInfo?.username }}</span>
                     </div>
                 </div>
                 <div v-if="viewUserInfo?.username === userStore.userInfo.username">
-                    <NuxtLink :to="`/edit-profile?username=${viewUserInfo?.username || 'admin'}`"
+                    <NuxtLink :to="`/edit-profile?username=${viewUserInfo?.username}`"
                         ><v-btn><v-icon size="28">mdi-account-edit</v-icon></v-btn></NuxtLink
                     >
                 </div>

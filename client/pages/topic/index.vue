@@ -28,7 +28,7 @@ const topicData = computed(() => {
                     <div v-if="item.topics">
                         <div v-for="(topic, idx) of item.topics" :key="idx" class="px-4 py-3">
                             <div class="top-item flex justify-between items-center gap-4">
-                                <div class="flex items-center">
+                                <div class="w-50% flex items-center">
                                     <span class="text-30px"><v-icon>mdi-shape</v-icon></span>
                                     <div class="ml-3">
                                         <h4 class="text-blue-700">{{ topic?.title || '' }}</h4>
@@ -41,13 +41,10 @@ const topicData = computed(() => {
                                     <span class="min-w-100px text-center">Số bài viết</span>
                                     <span class="font-600">{{ topic?.totalPosts }}</span>
                                 </div>
-                                <div
-                                    v-if="!Object.keys(topic?.postShow || {})?.length"
-                                    class="ml-2 w-250px text-center"
-                                >
+                                <div v-if="!Object.keys(topic?.postShow || {})?.length" class="ml-2 w-25% text-center">
                                     Chưa có bài viết nào
                                 </div>
-                                <div v-else class="w-250px flex items-center">
+                                <div v-else class="w-25% flex items-center">
                                     <NuxtImg
                                         :src="topic?.postShow?.imageUrl || '/img/logo-forum.png'"
                                         alt="avatar"

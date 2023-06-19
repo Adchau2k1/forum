@@ -1,6 +1,7 @@
 <script setup>
 import Message from '~/components/Message.vue'
 
+const { restAPI } = useApi()
 const form = ref(null)
 const userInfo = reactive({
     username: '',
@@ -30,15 +31,13 @@ const rePasswordRules = [
     (v) => v === userInfo.password || 'Nhập lại mật khẩu không khớp!',
 ]
 
-const onSubmit = async () => {
+const onSubmit = () => {
     form.value.validate().then(async (res) => {
         if (res.valid) {
-            const { restAPI } = useApi()
-            const { data: res } = await restAPI.user.createUser({
-                body: userInfo,
-            })
-
             try {
+                const { data: res } = await restAPI.user.createUser({
+                    body: userInfo,
+                })
                 if (res.value?.success) {
                     messageOptions.show = true
                     messageOptions.type = 'success'
