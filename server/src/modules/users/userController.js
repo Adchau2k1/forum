@@ -72,7 +72,7 @@ export default class UserController {
                     },
                     process.env.JWT_SECRET_KEY,
                     {
-                        expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRATION_TIME,
+                        expiresIn: process.env.JWT_EXPIRATION_TIME,
                     }
                 )
 

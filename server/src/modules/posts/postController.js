@@ -141,8 +141,7 @@ export default class PostController {
     // [DELETE] /posts
     async deletePostById(req, res) {
         try {
-            const { _id } = req.body
-            const result = await postRepository.deletePostById({ _id })
+            const result = await postRepository.deletePostById(req.body)
 
             if (result.error) {
                 res.json(errorResponse({ message: result.error }))

@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose'
 const Topic = new Schema({
     corner: { type: String, required: true },
     title: { type: String, required: true },
-    desc: { type: String },
+    desc: { type: String, default: '' },
     totalPosts: { type: Number, default: 0 },
     postShow: {
         _id: { type: Schema.Types.ObjectId, required: true },

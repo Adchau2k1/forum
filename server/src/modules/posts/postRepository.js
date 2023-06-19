@@ -1,5 +1,6 @@
-import { Schema } from 'mongoose'
+import mongoose from 'mongoose'
 import Post from './PostModel.js'
+import Topic from '../topics/TopicModel.js'
 
 class PostRepository {
     async getPostAll({ page, pageSize, isAll }) {
@@ -138,16 +139,68 @@ class PostRepository {
         }
     }
 
-    async deletePostById({ _id }) {
+    async deletePostById({ _id, topicId }) {
         try {
+            topicId = new mongoose.Types.ObjectId(topicId)
             const existingPost = await Post.findOne({ _id })
+            const postListOfTopicId = await Post.find({ topicId })
+
             if (existingPost) {
-                const oldPost = await Post.deleteOne({ _id })
+                if (postListOfTopicId?.length > 2) {
+                    const newPost = postListOfTopicId[postListOfTopicId.length - 2]
+                    console.log(newPost)
+                    const postShow = {
+                        _id: newPost._id,
+                        imageUrl: newPost.imageUrl,
+                        username: newPost.usernamePost,
+                        postBy: newPost.postBy,
+                        title: newPost.title,
+                        createdAt: newPost.createdAt,
+                    }
 
-                return oldPost
+                    const updatedAt = new Date()
+                    try {
+                        const newTopic = await Topic.updateOne(
+                            { _id: new mongoose.Types.ObjectId(topicId) },
+                            {
+                                totalPosts: postListOfTopicId.length - 2,
+                                postShow,
+                                updatedAt,
+                            }
+                        )
+                        console.error(newTopic)
+
+                        if (newTopic && newTopic.nModified > 0) {
+                            const oldPost = await Post.deleteOne({ _id })
+                            return oldPost
+                        }
+                        return { error: 'Không tìm thấy bài viết!' }
+                    } catch (err) {
+                        console.error(err.message)
+                    }
+                } else {
+                    console.log('Vào 2')
+                    const updatedAt = new Date()
+                    try {
+                        const newTopic = await Topic.updateOne(
+                            { _id: new mongoose.Types.ObjectId(topicId) },
+                            {
+                                totalPosts: 0,
+                                postShow: {},
+                                updatedAt,
+                            }
+                        )
+                        console.error(newTopic)
+                        if (newTopic && newTopic.nModified > 0) {
+                            const oldPost = await Post.deleteOne({ _id })
+                            return oldPost
+                        }
+                        return { error: 'Không tìm thấy bài viết!' }
+                    } catch (err) {
+                        console.error(err.message)
+                    }
+                }
             }
-
-            return { error: 'Không tìm thấy bài viết!' }
         } catch (err) {
             return { error: err.message }
         }
