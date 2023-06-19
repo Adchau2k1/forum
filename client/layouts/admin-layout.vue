@@ -4,6 +4,33 @@ import { useUserStore } from '~/stores/userStore'
 const userStore = useUserStore()
 const openMenu = ref(true)
 
+const menu = [
+    {
+        key: 'admin',
+        title: 'Dashboard',
+        to: '/admin',
+        icon: 'mdi-view-dashboard',
+    },
+    {
+        key: 'list-account',
+        title: 'Tài khoản',
+        to: '/admin/list-account',
+        icon: 'mdi-account',
+    },
+    {
+        key: 'list-post',
+        title: 'Bài đăng',
+        to: '/admin/list-post',
+        icon: 'mdi-table-edit',
+    },
+    {
+        key: 'list-topic',
+        title: 'Chuyên mục',
+        to: '/admin/list-topic',
+        icon: 'mdi-format-list-bulleted-type',
+    },
+]
+
 const toggleMenu = () => {
     openMenu.value = !openMenu.value
 }
@@ -12,6 +39,10 @@ const handleLogout = () => {
     userStore.logOut()
     navigateTo('/login')
 }
+
+useHead({
+    title: 'Quản trị diễn đàn',
+})
 </script>
 
 <template>
@@ -68,32 +99,25 @@ const handleLogout = () => {
         <!-- Menu list -->
         <v-navigation-drawer v-model="openMenu" color="grey-darken-1" permanent name="drawer" class="relative">
             <v-list class="px-2">
-                <NuxtLink to="/admin">
+                <NuxtLink
+                    v-for="(item, idx) of menu"
+                    :key="item.key"
+                    :to="item.to"
+                    :class="{
+                        'block mt-2': idx > 0,
+                    }"
+                >
                     <v-btn class="flex justify-start items-center !h-12 w-full"
-                        ><v-icon class="mr-1" size="24">mdi-view-dashboard</v-icon> Dashboard</v-btn
+                        ><v-icon class="mr-1" size="24">{{ item.icon }}</v-icon
+                        >{{ item.title }}</v-btn
                     >
-                </NuxtLink>
-                <NuxtLink to="/admin/list-account">
-                    <v-btn class="mt-2 flex justify-start items-center !h-12 w-full">
-                        <v-icon class="mr-1" size="24">mdi-account</v-icon> Tài khoản
-                    </v-btn>
-                </NuxtLink>
-                <NuxtLink to="/admin/list-post">
-                    <v-btn class="mt-2 flex justify-start items-center !h-12 w-full">
-                        <v-icon class="mr-1" size="24">mdi-table-edit</v-icon> Bài đăng
-                    </v-btn>
-                </NuxtLink>
-                <NuxtLink to="/admin/list-category">
-                    <v-btn class="mt-2 flex justify-start items-center !h-12 w-full">
-                        <v-icon class="mr-1" size="24">mdi-format-list-bulleted-type</v-icon> Chuyên mục
-                    </v-btn>
                 </NuxtLink>
             </v-list>
 
             <!-- Menu toggle -->
             <div
                 v-if="!openMenu"
-                class="z-100 absolute top-1/2 -translate-y-[calc(100%+64px)] -right-13 rounded-full !bg-primary"
+                class="z-100 absolute top-1/2 -translate-y-[calc(100%+64px)] -right-12 rounded-full !bg-primary"
             >
                 <v-app-bar-nav-icon @click="toggleMenu"></v-app-bar-nav-icon>
             </div>
@@ -109,4 +133,9 @@ const handleLogout = () => {
     </v-layout>
 </template>
 
-<style scoped></style>
+<style scoped>
+.router-link-active > button {
+    color: #22e1b9 !important;
+    border-right: 2px solid #22e1b9 !important;
+}
+</style>

@@ -140,6 +140,6 @@ useHead({
 
 <style scoped>
 .router-link-active {
-    background-color: #ddd;
+    background-color: #ddd !important;
 }
 </style>

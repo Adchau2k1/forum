@@ -24,12 +24,12 @@ const selectedValues = reactive({
     _id: '',
     topicId: '',
 })
-const { data: resPosts, refresh: refreshDataPost } = await restAPI.user.getPosts({ params: { isAll: true } })
-const dataPosts = computed(() => {
-    const newData = resPosts.value?.data?.data.map((post, idx) => ({
-        ...post,
+const { data: resTopics, refresh: refreshDataPost } = await restAPI.user.getTopics({ params: { isAll: true } })
+const dataTopics = computed(() => {
+    const newData = resTopics.value?.data?.map((topic, idx) => ({
+        ...topic,
         index: idx + 1,
-        createdAt: formatNormal(post.createdAt),
+        createdAt: formatNormal(topic.createdAt),
     }))
 
     return newData
@@ -43,9 +43,9 @@ const headers = [
         sortable: false,
     },
     {
-        title: 'Người đăng',
+        title: 'Góc',
         align: 'center',
-        key: 'postBy',
+        key: 'corner',
     },
     {
         title: 'Tiêu đề',
@@ -54,23 +54,23 @@ const headers = [
         sortable: false,
     },
     {
-        title: 'Chuyên mục',
+        title: 'Tổng số bài viết',
         align: 'center',
-        key: 'topicTitle',
+        key: 'totalPosts',
         sortable: false,
     },
     {
-        title: 'Ngày đăng',
+        title: 'Ngày tạo',
         align: 'center',
         key: 'createdAt',
         sortable: false,
     },
-    {
-        title: 'Thao tác',
-        align: 'center',
-        key: 'actions',
-        sortable: false,
-    },
+    // {
+    //     title: 'Thao tác',
+    //     align: 'center',
+    //     key: 'actions',
+    //     sortable: false,
+    // },
 ]
 
 const roles = [
@@ -95,7 +95,7 @@ const onSubmit = async () => {
             try {
                 const newPostInfo = { ...userInfo }
 
-                const { data: resUpdate } = await restAPI.user.updatePosts({
+                const { data: resUpdate } = await restAPI.user.updateTopics({
                     body: newPostInfo,
                 })
                 if (resUpdate.value?.success == true) {
@@ -161,9 +161,9 @@ definePageMeta({
             @onClickClose="messageOptions.show = false"
         />
 
-        <h2>Danh sách bài viết</h2>
+        <h2>Danh sách chuyên mục</h2>
         <div class="mt-10">
-            <VDataTable :headers="headers" :items="dataPosts" class="elevation-1">
+            <VDataTable :headers="headers" :items="dataTopics" class="elevation-1">
                 <template v-slot:top>
                     <v-dialog v-model="dialogEdit" transition="dialog-top-transition" width="70%" height="60%">
                         <v-card class="w-full h-full">

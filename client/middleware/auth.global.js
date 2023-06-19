@@ -1,35 +1,33 @@
 import { useJwt } from '@vueuse/integrations/useJwt'
 import { useUserStore } from '~/stores/userStore'
 
-export default defineNuxtRouteMiddleware((to, from, next) => {
-    const userStore = useUserStore()
+export default defineNuxtRouteMiddleware((to, from) => {
     const paths = to.path.split('/')
+    const accessToken = useCookie('accessToken')
+    const userStore = useUserStore()
 
-    if (process.client) {
-        if (['login', 'register'].includes(paths[1])) {
-            return next
-        }
+    // Bỏ check
+    if (['login', 'register'].includes(paths[1])) return
 
-        // Check người dùng đã đăng nhập và token đã hết hạn chưa
-        if (userStore.userInfo?.accessToken) {
-            console.log('đã vào 1')
-            const { payload } = useJwt(userStore.userInfo?.accessToken)
-            if (Date.now() / 1000 >= payload.value.exp) {
-                userStore.logOut()
-                return navigateTo('/login')
-            }
-        } else {
-            console.log('đã vào 2')
+    if (accessToken.value) {
+        const { payload } = useJwt(accessToken.value)
+        // Check token đã hết hạn chưa
+        if (Date.now() / 1000 >= payload.value.exp) {
             userStore.logOut()
             return navigateTo('/login')
         }
-    }
 
-    // // Check role admin khi vào trang admin
-    // if (paths[1] === 'admin') {
-    //     if (userStore.userInfo?.role !== 'admin') {
-    //         userStore.logOut()
-    //         return navigateTo('/login')
-    //     } else return next
-    // } else return next
+        // Check có phải admin
+        if (paths[1] === 'admin') {
+            // userStore chưa có giá trị khi server side
+            if (process.client) {
+                if (userStore.userInfo.role === 'admin') return
+                return navigateTo('/403')
+            }
+        }
+        return
+    } else {
+        userStore.logOut()
+        return navigateTo('/login')
+    }
 })

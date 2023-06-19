@@ -17,10 +17,8 @@ export default defineNuxtConfig({
 
     // SPA page
     routeRules: {
-        // One page
-        '/test': { ssr: false },
-        // All page
-        '/allPage/**/': { ssr: false },
+        '/admin/**/': { ssr: false },
+        403: { ssr: false },
     },
 
     runtimeConfig: {
@@ -38,4 +36,7 @@ export default defineNuxtConfig({
             })
         },
     },
+
+    pageTransition: { name: 'page', mode: 'out-in' },
+    layoutTransition: { name: 'layout', mode: 'out-in' },
 })

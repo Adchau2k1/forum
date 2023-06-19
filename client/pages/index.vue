@@ -1,9 +1,7 @@
 <script setup>
-import Message from '~/components/Message.vue'
 import Post from '~/components/Post.vue'
 
 const { restAPI } = useApi()
-const showMessage = ref(false)
 
 const { data: resPosts } = await restAPI.user.getShowPosts({})
 const dataShowPosts = ref(resPosts.value)
@@ -18,8 +16,6 @@ const dataStatistics = ref(resStatistics.value)
 <template>
     <NuxtLayout>
         <div class="w-full">
-            <Message v-model="showMessage" type="error" message="Có lỗi xảy ra!" @onClickClose="showMessage = false" />
-
             <div class="max-w-full flex gap-10">
                 <div class="w-7/10">
                     <div class="flex justify-between items-center">

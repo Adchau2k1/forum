@@ -42,13 +42,13 @@ const onSubmit = async () => {
                 if (res.value?.success) {
                     messageOptions.show = true
                     messageOptions.type = 'success'
-                    messageOptions.message = res?.value?.message
+                    messageOptions.message = res.value?.message
 
                     setTimeout(() => navigateTo('/login'), 2000)
                 } else {
                     messageOptions.show = true
                     messageOptions.type = 'error'
-                    messageOptions.message = res?.value?.message
+                    messageOptions.message = res.value?.message
                 }
             } catch (err) {
                 console.log('error:', err)

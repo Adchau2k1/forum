@@ -21,20 +21,20 @@ const onSubmit = () => {
             try {
                 const { restAPI } = useApi()
                 const { data: loginData } = await restAPI.user.login({ body: userInfo })
-                if (loginData.value.success) {
+                if (loginData.value?.success) {
                     const data = loginData?.value?.data
                     const userStore = useUserStore()
                     userStore.setUserInfo(data)
 
                     messageOptions.type = 'success'
                     messageOptions.show = true
-                    messageOptions.message = loginData.value.message
+                    messageOptions.message = loginData.value?.message
 
                     setTimeout(() => navigateTo('/'), 2000)
                 } else {
                     messageOptions.type = 'error'
                     messageOptions.show = true
-                    messageOptions.message = loginData.value.message
+                    messageOptions.message = loginData.value?.message
                 }
             } catch (err) {
                 console.error(err)

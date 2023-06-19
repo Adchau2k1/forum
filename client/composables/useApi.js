@@ -1,3 +1,4 @@
+import { useJwt } from '@vueuse/integrations/useJwt'
 import { useUserStore } from '~/stores/userStore'
 
 const API_ENDPOINTS = {
@@ -18,12 +19,35 @@ class Request {
         this.baseURL = useRuntimeConfig().public.baseURL || 'http://localhost:8000'
         this.accessToken = ''
 
-        if (process.client) {
-            const userStore = useUserStore()
-            this.accessToken = `Bearer ${userStore.userInfo.accessToken}`
-        } else {
-            const accessToken = useCookie('accessToken')
-            this.accessToken = `Bearer ${accessToken?.value}`
+        const accessToken = useCookie('accessToken')
+        if (accessToken.value) {
+            this.accessToken = `Bearer ${accessToken.value}`
+        }
+
+        this.handleRequest = {
+            // Check trước khi gọi api
+            onRequest({ request, options }) {
+                const userStore = useUserStore()
+                const accessToken = options.headers.Authorization
+
+                if (['/users/login', '/users/register'].includes(request)) return
+
+                if (accessToken) {
+                    const { payload } = useJwt(accessToken)
+                    if (Date.now() / 1000 >= payload.value.exp) {
+                        userStore.logOut()
+                        return navigateTo('/login')
+                    }
+                } else {
+                    userStore.logOut()
+                    return navigateTo('/login')
+                }
+            },
+
+            // onResponse({ request, response, options }) {
+            //     // Process the response data
+            //     localStorage.setItem('token', response._data.token)
+            // },
         }
     }
 
@@ -36,6 +60,7 @@ class Request {
                 'Content-type': 'application/json; charset=UTF-8',
                 Authorization: this.accessToken,
             },
+            ...this.handleRequest,
         })
     }
 
@@ -48,6 +73,7 @@ class Request {
                 'Content-type': 'application/json; charset=UTF-8',
                 Authorization: this.accessToken,
             },
+            ...this.handleRequest,
         })
     }
 
@@ -60,6 +86,7 @@ class Request {
                 'Content-type': 'application/json; charset=UTF-8',
                 Authorization: this.accessToken,
             },
+            ...this.handleRequest,
         })
     }
 
@@ -72,6 +99,7 @@ class Request {
                 'Content-type': 'application/json; charset=UTF-8',
                 Authorization: this.accessToken,
             },
+            ...this.handleRequest,
         })
     }
 }
@@ -83,19 +111,27 @@ class UserManager {
 
     // User
     async login(data) {
-        return this.request.post(API_ENDPOINTS.LOGIN, data)
+        return this.request.post(API_ENDPOINTS.LOGIN, data, true)
+    }
+
+    async createUser(data) {
+        return this.request.post(API_ENDPOINTS.REGISTER, data, true)
+    }
+
+    async getUsers(data) {
+        return this.request.get(API_ENDPOINTS.USER, data)
     }
 
     async getUserByUsername(data) {
         return this.request.get(`${API_ENDPOINTS.USER}/${data.username}`)
     }
 
-    async createUser(data) {
-        return this.request.post(API_ENDPOINTS.REGISTER, data)
-    }
-
     async updateUser(data) {
         return this.request.put(API_ENDPOINTS.USER, data)
+    }
+
+    async deleteUser(data) {
+        return this.request.delete(API_ENDPOINTS.USER, data)
     }
 
     // Index
@@ -116,8 +152,16 @@ class UserManager {
     }
 
     // Post
+    async getPosts(data) {
+        return this.request.get(API_ENDPOINTS.POST, data)
+    }
+
     async getPostById(_id) {
         return this.request.get(`${API_ENDPOINTS.POST}/${_id}`)
+    }
+
+    async getPostAllByFullName(data) {
+        return this.request.get(`${API_ENDPOINTS.USER_POSTS}/${data.postBy}`)
     }
 
     async createPost(data) {
@@ -128,8 +172,8 @@ class UserManager {
         return this.request.put(API_ENDPOINTS.POST, data)
     }
 
-    async getPostAllByFullName(data) {
-        return this.request.get(`${API_ENDPOINTS.USER_POSTS}/${data.postBy}`)
+    async deletePost(data) {
+        return this.request.delete(API_ENDPOINTS.POST, data)
     }
 
     // Topic
