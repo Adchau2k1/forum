@@ -48,6 +48,7 @@ class UserRepository {
 
     async loginUser({ username, password }) {
         try {
+            username = username.toLowerCase()
             const existingUser = await User.findOne({ username })
             if (existingUser) {
                 const isMatched = await bcrypt.compare(password, existingUser.password)
@@ -55,8 +56,6 @@ class UserRepository {
                     // Create JWT token
                     return existingUser
                 }
-
-                return { error: 'Tài khoản hoặc mật khẩu không chính xác!' }
             }
 
             return { error: 'Tài khoản hoặc mật khẩu không chính xác!' }
@@ -70,12 +69,9 @@ class UserRepository {
             username = username.toLowerCase()
             const existingUsername = await User.findOne({ username })
             const existingUserMail = await User.findOne({ email })
-            if (existingUsername) {
-                return { error: 'Tài khoản đã tồn tại!' }
-            }
-            if (existingUserMail) {
-                return { error: 'Email đã tồn tại!' }
-            }
+
+            if (existingUsername) return { error: 'Tài khoản đã tồn tại!' }
+            if (existingUserMail) return { error: 'Email đã tồn tại!' }
 
             const passwordHashed = await bcrypt.hash(
                 password,

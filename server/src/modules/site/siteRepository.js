@@ -53,7 +53,7 @@ class SiteRepository {
             const existingTopics = await Topic.find()
             const existingUsers = await User.find()
             const existingPosts = await Post.find()
-            const aveAccess = 210
+            const aveAccess = 60
 
             return {
                 topics: existingTopics?.length,
